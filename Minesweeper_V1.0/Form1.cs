@@ -14,8 +14,10 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
-            Button[,] btn = new Button[9,9];
-            int size = 17;
+            Button[,] btn = new Button[9,9]; 
+            int size = 17; //Buttongröße
+            
+            //Erstellen und Konfigurieren Buttons
             for (int x = 0; x < 9; x++)
             {
                 
