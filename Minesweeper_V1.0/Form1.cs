@@ -24,8 +24,9 @@ namespace WindowsFormsApplication1
                 for (int y = 0; y < 9; y++)
                 {
                     btn[x, y] = new Button();
-                    btn[x, y].Name = "Button" + x + y;
+                    btn[x, y].Name = "Button"+ x + y;
                     btn[x, y].Size = new Size(size, size);
+                    btn[x, y].Click += new EventHandler(this.button_Click);
                     btn[x, y].Location = new Point(x * (size - 1), y * (size - 1));
                     btn[x, y].Text = Convert.ToString(x) + Convert.ToString(y);
                     btn[x, y].Image = Properties.Resources.blank;
@@ -36,6 +37,14 @@ namespace WindowsFormsApplication1
                     this.Controls.Add(btn[x, y]);
                 }
             }
+            
+        }
+
+        void button_Click(object sender, EventArgs e)
+        {
+           // throw new NotImplementedException();
+            MessageBox.Show(Convert.ToString(sender));
+            
             
         }
 
