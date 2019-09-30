@@ -15,6 +15,13 @@ namespace WindowsFormsApplication1
         int[] bmb_x = new Int32[5]; // Position der Bomben X-Koordinate
         int[] bmb_y = new Int32[5]; // Position der Bomben Y-Koordinate
         int bombenzahl = 5; // Anzahl der Bomben
+        Bitmap blankBitmap = Properties.Resources.blank;
+        Bitmap uncoverBitmap = Properties.Resources.uncover;
+        Bitmap flagBitmap = Properties.Resources.flag;
+        Bitmap mineBitmap = Properties.Resources.mine;
+        Bitmap redMineBitmap = Properties.Resources.red_mine;
+        Bitmap num1Bitmap = Properties.Resources.num_1;
+        Bitmap num2Bitmap = Properties.Resources.num_2;
                 
         public Form1()
         {
@@ -41,10 +48,10 @@ namespace WindowsFormsApplication1
                     btn[x, y].Name = "Button"+ x + y;
                     btn[x, y].Tag = x + "." + y;
                     btn[x, y].Size = new Size(size, size);
-                    btn[x, y].Click += new EventHandler(this.button_Click);
+                    btn[x, y].MouseDown += new MouseEventHandler(this.button_Click);
                     btn[x, y].Location = new Point(x * (size - 1), y * (size - 1));
                  // btn[x, y].Text = Convert.ToString(x) + Convert.ToString(y); // Beschriftung der Buttons entfernt um Image besser sehen zu können
-                    btn[x, y].Image = Properties.Resources.blank;
+                    btn[x, y].Image = blankBitmap;
                     btn[x, y].TabStop = false;
                     btn[x, y].FlatStyle = FlatStyle.Flat;
                     btn[x, y].FlatAppearance.BorderSize = 0;
@@ -54,7 +61,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        void button_Click(object sender, EventArgs e)
+        void button_Click(object sender, MouseEventArgs e)
         {
             string curtentTag = (string)((Button)sender).Tag; //auslesen des Tags
             string[] coord = curtentTag.Split('.'); //zerteilen des Tags in die Koordinaten
@@ -62,22 +69,66 @@ namespace WindowsFormsApplication1
             int y = Convert.ToInt32(coord[1]);
          // MessageBox.Show(x+ "," +y);
          // MessageBox.Show(Convert.ToString(uncover(x,y)));
-            uncover(x, y); //aufdecken ohne MessageBox
-            
-            for (int i = 0; i < bombenzahl; i++) 
+
+            if (e.Button == MouseButtons.Right)
             {
-                if (x == bmb_x[i] && y == bmb_y[i])
+                if (btn[x, y].Image == blankBitmap)
                 {
-                    btn[x, y].Image = Properties.Resources.num_2; // Hier Bombenimage reinsetzen
+                    btn[x, y].Image = flagBitmap;
+                }
+                else if (btn[x, y].Image == flagBitmap)
+                {
+                    btn[x, y].Image = blankBitmap;
                 }
             }
-            
+            if (e.Button == MouseButtons.Left)
+            {
+                int counts = countMines(x, y); //umliegende Minen zählen
+
+                switch (counts)
+                {
+                    case 0:
+                        btn[x, y].Image = uncoverBitmap;
+                        break;
+                    case 1:
+                        btn[x, y].Image = num1Bitmap;
+                        break;
+                    case 2:
+                        btn[x, y].Image = num2Bitmap;
+                        break;
+                }
+
+                for (int i = 0; i < bombenzahl; i++)
+                {
+                    if (x == bmb_x[i] && y == bmb_y[i])
+                    {
+                        btn[x, y].Image = mineBitmap; 
+                    }
+                }
+            }  
         }
 
-        public int uncover(int x, int y)
+        public int countMines(int x, int y)
         {
             int value = 0;
-            btn[x, y].Image = Properties.Resources.uncover;          
+            for (int iy = -1; iy <= 1; iy++)
+            {
+                for (int ix = -1; ix <= 1; ix++)
+                {
+                    if (ix == 0 && iy == 0)
+                    {
+                        ix++;
+                    }
+                    for (int i = 0; i < bombenzahl; i++)
+                    {
+                        if (x + ix == bmb_x[i] && y + iy  == bmb_y[i])
+                        {
+                            value++;
+                        }
+                    }
+                }
+            }
+            btn[x, y].Image = uncoverBitmap;          
             return value;
         }
 
