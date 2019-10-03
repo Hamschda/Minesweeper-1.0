@@ -25,6 +25,10 @@ namespace WindowsFormsApplication1
         Bitmap num2Bitmap = Properties.Resources.num_2;
         Bitmap num3Bitmap = Properties.Resources.num_3;
         Bitmap num4Bitmap = Properties.Resources.num_4;
+        Bitmap num5Bitmap = Properties.Resources.num_5;
+        Bitmap num6Bitmap = Properties.Resources.num_6;
+        Bitmap num7Bitmap = Properties.Resources.num_7;
+        Bitmap num8Bitmap = Properties.Resources.num_8;
                 
         public Form1()
         {
@@ -154,6 +158,18 @@ namespace WindowsFormsApplication1
                     break;
                 case 4:
                     btn[x, y].Image = num4Bitmap;
+                    break;
+                case 5:
+                    btn[x, y].Image = num5Bitmap;
+                    break;
+                case 6:
+                    btn[x, y].Image = num6Bitmap;
+                    break;
+                case 7:
+                    btn[x, y].Image = num7Bitmap;
+                    break;
+                case 8:
+                    btn[x, y].Image = num8Bitmap;
                     break;
             }
             //#Hier Zähler für aufgedeckte Felder einfügen

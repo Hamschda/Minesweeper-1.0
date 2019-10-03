@@ -104,6 +104,41 @@
   <ItemGroup>
     <None Include="Resources\num_4.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num_5.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num_6.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num_7.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num_8.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7S-0.bmp" />
+    <None Include="Resources\7S-1.bmp" />
+    <None Include="Resources\7S-2.bmp" />
+    <None Include="Resources\7S-3.bmp" />
+    <None Include="Resources\7S-4.bmp" />
+    <None Include="Resources\7S-5.bmp" />
+    <None Include="Resources\7S-6.bmp" />
+    <None Include="Resources\7S-7.bmp" />
+    <None Include="Resources\7S-8.bmp" />
+    <None Include="Resources\7S-9.bmp" />
+    <None Include="Resources\bottom_left.bmp" />
+    <None Include="Resources\bottom_right.bmp" />
+    <None Include="Resources\emojy_cool.bmp" />
+    <None Include="Resources\emojy_happy.bmp" />
+    <None Include="Resources\emojy_sad.png" />
+    <None Include="Resources\frame.bmp" />
+    <None Include="Resources\head_left.bmp" />
+    <None Include="Resources\head_mid.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\head_right.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
