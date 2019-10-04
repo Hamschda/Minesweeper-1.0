@@ -80,7 +80,7 @@ namespace WindowsFormsApplication1
 
             if (e.Button == MouseButtons.Right && gameover == false) //Prüfen, ob Rechts-Klick 
             {
-                if (btn[x, y].Image == blankBitmap && flaggenzahl >= 1) 
+                if (btn[x, y].Image == blankBitmap && flaggenzahl >= 1)
                 {
                     btn[x, y].Image = flagBitmap;
                     flaggenzahl--; //Flaggenzahl minimieren bei gesetzter Flagge
@@ -102,14 +102,36 @@ namespace WindowsFormsApplication1
                         if (x == bmb_x[i] && y == bmb_y[i])
                         {
                             btn[x, y].Image = redMineBitmap;
-                         // #hier alle anderen Bomben aufdecken
+                            // #hier alle anderen Bomben aufdecken
                             gameover = true; // Für Blockade der Clicks
+                        }
+                    }
+                }
+            }
+            if (gameover == true)
+            {
+                for (int ix = 0; ix <= 9; ix++)
+                {
+                    for (int iy = 0; iy <= 9; iy++)
+                    {
+                        for (int i = 0; i < bombenzahl; i++)
+                        {
+                            x = ix;
+                            y = iy;
+                            if (x == bmb_x[i] && y == bmb_y[i])
+                            {
+                                if (btn[x, y].Image != redMineBitmap)
+                                {
+                                    btn[x, y].Image = mineBitmap;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
 
+        
         public void countMines(int x, int y)
         {
             int value = 0;
