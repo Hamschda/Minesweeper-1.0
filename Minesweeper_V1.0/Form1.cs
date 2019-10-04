@@ -11,7 +11,9 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        static int bombenzahl = 9;
+        static int bombenzahl = 9; // Anzahl der Bomben
+        int flaggenzahl = bombenzahl; // Anzahl der Flaggen
+        bool gameover = false;
         Button[,] btn = new Button[9, 9];
         int[] bmb_x = new Int32[bombenzahl]; // Position der Bomben X-Koordinate
         int[] bmb_y = new Int32[bombenzahl]; // Position der Bomben Y-Koordinate
@@ -71,35 +73,41 @@ namespace WindowsFormsApplication1
         {
             string curtentTag = (string)((Button)sender).Tag; //auslesen des Tags
             string[] coord = curtentTag.Split('.'); //zerteilen des Tags in die Koordinaten
-            int x = Convert.ToInt32(coord[0]); 
+            int x = Convert.ToInt32(coord[0]);
             int y = Convert.ToInt32(coord[1]);
-         // MessageBox.Show(x+ "," +y);
-         // MessageBox.Show(Convert.ToString(uncover(x,y)));
+            // MessageBox.Show(x+ "," +y);
+            // MessageBox.Show(Convert.ToString(uncover(x,y)));
 
-            if (e.Button == MouseButtons.Right) //Prüfen, ob Rechts-Klick //#Blockade, wenn gameover
+            if (e.Button == MouseButtons.Right && gameover == false) //Prüfen, ob Rechts-Klick 
             {
-                if (btn[x, y].Image == blankBitmap) //#Anzahl an Flaggen beschränken
+                if (btn[x, y].Image == blankBitmap && flaggenzahl >= 1) 
                 {
                     btn[x, y].Image = flagBitmap;
+                    flaggenzahl--; //Flaggenzahl minimieren bei gesetzter Flagge
                 }
                 else if (btn[x, y].Image == flagBitmap)
                 {
                     btn[x, y].Image = blankBitmap;
+                    flaggenzahl++; //Flaggenzahl erhöhen bei gesetzter Flagge
                 }
             }
-            if (e.Button == MouseButtons.Left) //Prüfen, ob Links-Klick //#Blockade, wenn gameover
+            if (e.Button == MouseButtons.Left && gameover == false) //Prüfen, ob Links-Klick
             {
-                countMines(x, y); //umliegende Minen zählen
-
-                for (int i = 0; i < bombenzahl; i++)
+                if (btn[x, y].Image != flagBitmap) // Prüfen ob eine Flagge auf dem Feld vorhanden ist
                 {
-                    if (x == bmb_x[i] && y == bmb_y[i])
+                    countMines(x, y); //umliegende Minen zählen
+
+                    for (int i = 0; i < bombenzahl; i++)
                     {
-                        btn[x, y].Image = redMineBitmap;
-                        // #hier alle anderen Bomben aufdecken 
+                        if (x == bmb_x[i] && y == bmb_y[i])
+                        {
+                            btn[x, y].Image = redMineBitmap;
+                         // #hier alle anderen Bomben aufdecken
+                            gameover = true; // Für Blockade der Clicks
+                        }
                     }
                 }
-            }  
+            }
         }
 
         public void countMines(int x, int y)
