@@ -14,7 +14,10 @@ namespace WindowsFormsApplication1
         static int bombenzahl = 9; // Anzahl der Bomben
         int flaggenzahl = bombenzahl; // Anzahl der Flaggen
         bool gameover = false;
-        Button[,] btn = new Button[9, 9];
+        int width = 9; //Spielfeldbreie
+        int height = 9; //Spielfeldhöhe
+        Button[,] btn = new Button[100, 100];
+        Button picEmojy = new Button();
         int[] bmb_x = new Int32[bombenzahl]; // Position der Bomben X-Koordinate
         int[] bmb_y = new Int32[bombenzahl]; // Position der Bomben Y-Koordinate
         //int bombenzahl = 5; // Anzahl der Bomben
@@ -35,30 +38,91 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
-            int size = 17; //Buttongröße
+            int size = 16; //Buttongröße
+            this.Size = new Size(36 + width * size, 100 + height * size);
+            this.MaximizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.BackColor = Color.FromArgb(192, 192, 192);
             
             Random random = new Random(); // Random zum erzeugen der Bombenpositionen
             // Erzeugen der Bombenpositionen
             for (int i = 0; i < bombenzahl; i++)
             {
-                int pos_x = random.Next(0, 8); //# Prüfung, ob Bombenposition bereits vergeben
-                int pos_y = random.Next(0, 8);
+                int pos_x = random.Next(0, width); //# Prüfung, ob Bombenposition bereits vergeben
+                int pos_y = random.Next(0, height);
                 bmb_x[i] = pos_x;
                 bmb_y[i] = pos_y;
             }
-            
+            //Konfiguration des Emojy-Buttons
+            picEmojy.Size = new Size(26, 26);
+            picEmojy.Image = Properties.Resources.emojy_happy;
+            picEmojy.Location = new Point(10 + width * size / 2 - 13, 13);
+            picEmojy.TabStop = false;
+            picEmojy.FlatStyle = FlatStyle.Flat;
+            picEmojy.FlatAppearance.BorderSize = 0;
+            picEmojy.FlatAppearance.BorderColor = Color.FromArgb(0, 255, 255, 255);
+            this.Controls.Add(picEmojy);
+
+            //Konfiguration der oberen Eckteile
+            PictureBox picHL = new PictureBox();
+            picHL.Size = new Size(58, 52);
+            picHL.Image = Properties.Resources.head_left;
+            picHL.Location = new Point(0, 0);
+            this.Controls.Add(picHL);
+
+            PictureBox picHR = new PictureBox();
+            picHR.Size = new Size(58, 52);
+            picHR.Image = Properties.Resources.head_right;
+            picHR.Location = new Point(width * 16 + 20 - 58, 0);
+            this.Controls.Add(picHR);
             
             //Erstellen und Konfigurieren der Buttons
-            for (int x = 0; x < 9; x++)
-            { 
-                for (int y = 0; y < 9; y++)
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
                 {
+                    //Konfiguration der unteren Rahmenteile
+                    if (x < (width - 2))
+                    {
+                        Bitmap FrameBitmap = Properties.Resources.frame;
+                        FrameBitmap.RotateFlip(RotateFlipType.Rotate270FlipY);
+                        PictureBox picFrB = new PictureBox();
+                        picFrB.Size = new Size(16, 10);
+                        picFrB.Image = FrameBitmap;
+                        picFrB.Location = new Point(x * size + 26, height * size + 52);
+                        this.Controls.Add(picFrB);
+                    }
+                    //Konfiguration der oberen Rahmenteile
+                    if (x < (width - 6))
+                    {
+                        PictureBox picHM = new PictureBox();
+                        picHM.Size = new Size(16, 52);
+                        picHM.Image = Properties.Resources.head_mid;
+                        picHM.Location = new Point(x * size + 10 + size * 3, 0);
+                        this.Controls.Add(picHM);
+                    }
+                    //Konfiguration der seitlichen Rahmenteile
+                    if (x == 0)
+                    {
+                        PictureBox picFrR = new PictureBox();
+                        picFrR.Size = new Size(10, 16);
+                        picFrR.Image = Properties.Resources.frame;
+                        picFrR.Location = new Point(width * size + 20 - 10, y * size + 52);
+                        this.Controls.Add(picFrR);
+
+                        PictureBox picFrL = new PictureBox();
+                        picFrL.Size = new Size(10, 16);
+                        picFrL.Image = Properties.Resources.frame;
+                        picFrL.Location = new Point(0, y * size + 52);
+                        this.Controls.Add(picFrL);
+                    }
+
                     btn[x, y] = new Button();
-                    btn[x, y].Name = "Button"+ x + y;
+                    btn[x, y].Name = "Button" + x + y;
                     btn[x, y].Tag = x + "." + y; //Koordinaten als Tag abspeichern
-                    btn[x, y].Size = new Size(size, size);
+                    btn[x, y].Size = new Size(size + 1, size + 1);
                     btn[x, y].MouseDown += new MouseEventHandler(this.button_Click); //MouseDown -> ermöglicht Auswertung von Rechts-Klick
-                    btn[x, y].Location = new Point(x * (size - 1), y * (size - 1)+40);
+                    btn[x, y].Location = new Point(x * size + 9, y * size + 51);
                     btn[x, y].Image = blankBitmap;
                     btn[x, y].TabStop = false;
                     btn[x, y].FlatStyle = FlatStyle.Flat;
@@ -67,6 +131,17 @@ namespace WindowsFormsApplication1
                     this.Controls.Add(btn[x, y]);
                 }
             }
+            PictureBox picBL = new PictureBox();
+            picBL.Size = new Size(26, 26);
+            picBL.Image = Properties.Resources.bottom_left;
+            picBL.Location = new Point(0, 52 + (height - 1) * size);
+            this.Controls.Add(picBL);
+
+            PictureBox picBR = new PictureBox();
+            picBR.Size = new Size(26, 26);
+            picBR.Image = Properties.Resources.bottom_right;
+            picBR.Location = new Point((width - 1) * size + 10, 52 + (height - 1) * size);
+            this.Controls.Add(picBR);
         }
 
         void button_Click(object sender, MouseEventArgs e)
@@ -102,17 +177,17 @@ namespace WindowsFormsApplication1
                         if (x == bmb_x[i] && y == bmb_y[i])
                         {
                             btn[x, y].Image = redMineBitmap;
-                            // #hier alle anderen Bomben aufdecken
                             gameover = true; // Für Blockade der Clicks
+                            picEmojy.Image = Properties.Resources.emojy_sad;
                         }
                     }
                 }
             }
             if (gameover == true)
             {
-                for (int ix = 0; ix <= 9; ix++)
+                for (int ix = 0; ix < width; ix++)
                 {
-                    for (int iy = 0; iy <= 9; iy++)
+                    for (int iy = 0; iy < height; iy++)
                     {
                         for (int i = 0; i < bombenzahl; i++)
                         {
@@ -167,7 +242,7 @@ namespace WindowsFormsApplication1
                             {
                                 ix++;
                             }
-                            if (0 <= ix + x && ix + x <= 8 && 0 <= iy + y && iy + y <= 8) //Bedingung, um im Spielfeld zu bleiben
+                            if (0 <= ix + x && ix + x < width && 0 <= iy + y && iy + y < height) //Bedingung, um im Spielfeld zu bleiben
                             {
                                 if(btn[ix + x, iy + y].Image == blankBitmap) //Bedinung, um nur blanke Felder zu betrachten
                                 {
