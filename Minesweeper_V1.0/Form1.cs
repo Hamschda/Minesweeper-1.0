@@ -14,12 +14,15 @@ namespace WindowsFormsApplication1
         static int bombenzahl = 9; // Anzahl der Bomben
         int flaggenzahl = bombenzahl; // Anzahl der Flaggen
         bool gameover = false;
+        bool gamewin = false;
         int width = 9; //Spielfeldbreie
         int height = 9; //Spielfeldhöhe
+        int aufgedecktefelder;
         Button[,] btn = new Button[100, 100];
         Button picEmojy = new Button();
         int[] bmb_x = new Int32[bombenzahl]; // Position der Bomben X-Koordinate
         int[] bmb_y = new Int32[bombenzahl]; // Position der Bomben Y-Koordinate
+        
 
         //int bombenzahl = 5; // Anzahl der Bomben
         Bitmap blankBitmap = Properties.Resources.blank; // Abspeichern der Resourcen in Variablen
@@ -39,6 +42,8 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
+
+            
             int size = 16; //Buttongröße
             this.Size = new Size(36 + width * size, 100 + height * size);
             this.MaximizeBox = false;
@@ -170,7 +175,16 @@ namespace WindowsFormsApplication1
             // Auswertung ob Spiel verloren ist wenn Emojy geklickt wird
             if (gameover == true)
             {
-                MessageBox.Show("Restart");
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        btn[x, y].Image = blankBitmap; //Umdrehen der Buttons
+                        picEmojy.Image = Properties.Resources.emojy_happy; // Emojy wieder zum lachen bringen
+                        flaggenzahl = bombenzahl; // Rücksetzen der Flaggenzahl
+                        gameover = false; // Freigeben des Spiels
+                    }
+                }
             }
         }
 
@@ -213,6 +227,13 @@ namespace WindowsFormsApplication1
                     }
                 }
             }
+            int felderzahl = width * height; // Berechnung der Felder
+            int felderohnebomben = felderzahl - bombenzahl; // Berechnung der Felder ohne Bomben
+            if (felderohnebomben == aufgedecktefelder)
+            {
+                gamewin = true;
+                picEmojy.Image = Properties.Resources.emojy_cool;
+            }
             // Aufdecken der Bomben im Spiel
             if (gameover == true)
             {
@@ -230,6 +251,10 @@ namespace WindowsFormsApplication1
                                 {
                                     btn[x, y].Image = mineBitmap;
                                 }
+                            }
+                            if (x != bmb_x[i] && y != bmb_y[i] && btn[x, y].Image == flagBitmap) // Abfrage falsch gesetzte Fahne
+                            {
+                                btn[x, y].Image = num8Bitmap; // # Hier Durchgestrichene Bombe einfügen
                             }
                         }
                     }
@@ -263,6 +288,7 @@ namespace WindowsFormsApplication1
             {
                 case 0:
                     btn[x, y].Image = uncoverBitmap;
+                    aufgedecktefelder++;
                     //Schleife zum Öffenen/Zählen der umliegenden Felder
                     for (int iy = -1; iy <= 1; iy++)
                     {
@@ -284,30 +310,82 @@ namespace WindowsFormsApplication1
                     break;
                 case 1:
                     btn[x, y].Image = num1Bitmap;
+                    aufgedecktefelder++;
                     break;
                 case 2:
                     btn[x, y].Image = num2Bitmap;
+                    aufgedecktefelder++;
                     break;
                 case 3:
                     btn[x, y].Image = num3Bitmap;
+                    aufgedecktefelder++;
                     break;
                 case 4:
                     btn[x, y].Image = num4Bitmap;
+                    aufgedecktefelder++;
                     break;
                 case 5:
                     btn[x, y].Image = num5Bitmap;
+                    aufgedecktefelder++;
                     break;
                 case 6:
                     btn[x, y].Image = num6Bitmap;
+                    aufgedecktefelder++;
                     break;
                 case 7:
                     btn[x, y].Image = num7Bitmap;
+                    aufgedecktefelder++;
                     break;
                 case 8:
                     btn[x, y].Image = num8Bitmap;
+                    aufgedecktefelder++;
                     break;
             }
-            //#Hier Zähler für aufgedeckte Felder einfügen
+            //Zähler für aufgedeckte Felder
+            /*
+            for (int cnt_x = 0; cnt_x < width; cnt_x++)
+            {
+                for (int cnt_y = 0; cnt_y < height; cnt_y++)
+                {
+                    if (btn[x, y].Image == uncoverBitmap)
+                    {
+                        aufgedecktefelder++;
+                    }
+                    if (btn[x, y].Image == num1Bitmap)
+                    {
+                        aufgedecktefelder++;
+                    }
+                    if (btn[x, y].Image == num2Bitmap)
+                    {
+                        aufgedecktefelder++;
+                    }
+                    if (btn[x, y].Image == num3Bitmap)
+                    {
+                        aufgedecktefelder++;
+                    }
+                    if (btn[x, y].Image == num4Bitmap)
+                    {
+                        aufgedecktefelder++;
+                    }
+                    if (btn[x, y].Image == num5Bitmap)
+                    {
+                        aufgedecktefelder++;
+                    }
+                    if (btn[x, y].Image == num6Bitmap)
+                    {
+                        aufgedecktefelder++;
+                    }
+                    if (btn[x, y].Image == num7Bitmap)
+                    {
+                        aufgedecktefelder++;
+                    }
+                    if (btn[x, y].Image == num8Bitmap)
+                    {
+                        aufgedecktefelder++;
+                    }
+                }
+            }
+             * */
         }
 
         /*private void button1_Click(object sender, EventArgs e)
