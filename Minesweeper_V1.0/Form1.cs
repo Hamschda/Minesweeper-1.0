@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1
         Button picEmojy = new Button();
         int[] bmb_x = new Int32[bombenzahl]; // Position der Bomben X-Koordinate
         int[] bmb_y = new Int32[bombenzahl]; // Position der Bomben Y-Koordinate
+
         //int bombenzahl = 5; // Anzahl der Bomben
         Bitmap blankBitmap = Properties.Resources.blank; // Abspeichern der Resourcen in Variablen
         Bitmap uncoverBitmap = Properties.Resources.uncover;
@@ -45,14 +46,33 @@ namespace WindowsFormsApplication1
             this.BackColor = Color.FromArgb(192, 192, 192);
             
             Random random = new Random(); // Random zum erzeugen der Bombenpositionen
+            int pos_x;
+            int pos_y;
+
             // Erzeugen der Bombenpositionen
             for (int i = 0; i < bombenzahl; i++)
             {
-                int pos_x = random.Next(0, width); //# Prüfung, ob Bombenposition bereits vergeben
-                int pos_y = random.Next(0, height);
+                pos_x = random.Next(0, width);
+                pos_y = random.Next(0, height);
                 bmb_x[i] = pos_x;
                 bmb_y[i] = pos_y;
             }
+            // Prüfung ob Bombenpositionen doppelt vorhanden sind
+            for (int i = 0; i < bombenzahl; i++)
+            {
+                for (int j = i + 1; j < bombenzahl; j++)
+                {
+                    if (bmb_x[j] == bmb_x[i] && bmb_y[j] == bmb_y[i])
+
+                    {
+                        pos_x = random.Next(0, width);
+                        bmb_x[i] = pos_x;
+                        pos_y = random.Next(0, height);
+                        bmb_y[i] = pos_y;
+                    }
+                }
+            }
+
             //Konfiguration des Emojy-Buttons
             picEmojy.Size = new Size(26, 26);
             picEmojy.Image = Properties.Resources.emojy_happy;
