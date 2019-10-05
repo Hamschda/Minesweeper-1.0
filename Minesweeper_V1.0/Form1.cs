@@ -61,6 +61,7 @@ namespace WindowsFormsApplication1
             picEmojy.FlatStyle = FlatStyle.Flat;
             picEmojy.FlatAppearance.BorderSize = 0;
             picEmojy.FlatAppearance.BorderColor = Color.FromArgb(0, 255, 255, 255);
+            picEmojy.MouseClick += new MouseEventHandler(picEmojy_Click); // Klicken auf Emojy
             this.Controls.Add(picEmojy);
 
             //Konfiguration der oberen Eckteile
@@ -75,7 +76,7 @@ namespace WindowsFormsApplication1
             picHR.Image = Properties.Resources.head_right;
             picHR.Location = new Point(width * 16 + 20 - 58, 0);
             this.Controls.Add(picHR);
-            
+
             //Erstellen und Konfigurieren der Buttons
             for (int x = 0; x < width; x++)
             {
@@ -142,6 +143,15 @@ namespace WindowsFormsApplication1
             picBR.Image = Properties.Resources.bottom_right;
             picBR.Location = new Point((width - 1) * size + 10, 52 + (height - 1) * size);
             this.Controls.Add(picBR);
+    }
+
+        void picEmojy_Click(object sender, MouseEventArgs e)
+        {
+            // Auswertung ob Spiel verloren ist wenn Emojy geklickt wird
+            if (gameover == true)
+            {
+                MessageBox.Show("Restart");
+            }
         }
 
         void button_Click(object sender, MouseEventArgs e)
@@ -183,11 +193,12 @@ namespace WindowsFormsApplication1
                     }
                 }
             }
+            // Aufdecken der Bomben im Spiel
             if (gameover == true)
             {
-                for (int ix = 0; ix < width; ix++)
+                for (int ix = 0; ix < width; ix++) // Durchsuchen des Spielfeldes in x-Richtung
                 {
-                    for (int iy = 0; iy < height; iy++)
+                    for (int iy = 0; iy < height; iy++) // Durchsuchen des Spielfeldes in y-Richtung
                     {
                         for (int i = 0; i < bombenzahl; i++)
                         {
@@ -195,7 +206,7 @@ namespace WindowsFormsApplication1
                             y = iy;
                             if (x == bmb_x[i] && y == bmb_y[i])
                             {
-                                if (btn[x, y].Image != redMineBitmap)
+                                if (btn[x, y].Image != redMineBitmap && btn[x,y].Image != flagBitmap) // Abfrage ob Bombe die Aufgedeckt werden soll die erste Bombe war bzw. ob Bombe durch Fahne deaktiviert ist
                                 {
                                     btn[x, y].Image = mineBitmap;
                                 }
@@ -205,8 +216,7 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-
-        
+  
         public void countMines(int x, int y)
         {
             int value = 0;
