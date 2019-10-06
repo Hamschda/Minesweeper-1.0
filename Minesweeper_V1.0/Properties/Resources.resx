@@ -214,4 +214,10 @@
   <data name="_7S_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\7S-9.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="crossed_mine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\crossed_mine.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Menue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Menue.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

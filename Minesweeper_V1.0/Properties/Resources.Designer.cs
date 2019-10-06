@@ -193,6 +193,16 @@ namespace WindowsFormsApplication1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap crossed_mine {
+            get {
+                object obj = ResourceManager.GetObject("crossed_mine", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap emojy_cool {
             get {
                 object obj = ResourceManager.GetObject("emojy_cool", resourceCulture);
@@ -266,6 +276,16 @@ namespace WindowsFormsApplication1.Properties {
         internal static System.Drawing.Bitmap head_right {
             get {
                 object obj = ResourceManager.GetObject("head_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Menue {
+            get {
+                object obj = ResourceManager.GetObject("Menue", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -6,30 +6,38 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        static int bombenzahl = 9; // Anzahl der Bomben
-        int flaggenzahl = bombenzahl; // Anzahl der Flaggen
+        int bombenzahl; // Anzahl der Bomben
+        int flaggenzahl; // Anzahl der Flaggen
         bool gameover = false;
         bool gamewin = false;
-        int width = 9; //Spielfeldbreie
-        int height = 9; //Spielfeldhöhe
-        int aufgedecktefelder;
-        Button[,] btn = new Button[100, 100];
+        int width; //Spielfeldbreie
+        int height; //Spielfeldhöhe
+        int aufgedecktefelder = 0;
+        int timer = 0;
+        Button[,] btn = new Button[30, 24];
         Button picEmojy = new Button();
-        int[] bmb_x = new Int32[bombenzahl]; // Position der Bomben X-Koordinate
-        int[] bmb_y = new Int32[bombenzahl]; // Position der Bomben Y-Koordinate
+        PictureBox counter1 = new PictureBox();
+        PictureBox counter2 = new PictureBox();
+        PictureBox counter3 = new PictureBox();
+        PictureBox timer1 = new PictureBox();
+        PictureBox timer2 = new PictureBox();
+        PictureBox timer3 = new PictureBox();
+        int[] bmb_x = new Int32[667]; // Position der Bomben X-Koordinate
+        int[] bmb_y = new Int32[667]; // Position der Bomben Y-Koordinate
         
 
-        //int bombenzahl = 5; // Anzahl der Bomben
         Bitmap blankBitmap = Properties.Resources.blank; // Abspeichern der Resourcen in Variablen
         Bitmap uncoverBitmap = Properties.Resources.uncover;
         Bitmap flagBitmap = Properties.Resources.flag;
         Bitmap mineBitmap = Properties.Resources.mine;
         Bitmap redMineBitmap = Properties.Resources.red_mine;
+        Bitmap crossedMineBitmap = Properties.Resources.crossed_mine;
         Bitmap num1Bitmap = Properties.Resources.num_1;
         Bitmap num2Bitmap = Properties.Resources.num_2;
         Bitmap num3Bitmap = Properties.Resources.num_3;
@@ -38,18 +46,167 @@ namespace WindowsFormsApplication1
         Bitmap num6Bitmap = Properties.Resources.num_6;
         Bitmap num7Bitmap = Properties.Resources.num_7;
         Bitmap num8Bitmap = Properties.Resources.num_8;
-                
+
+        /*Random random = new Random();
+        PictureBox picHL = new PictureBox();
+        PictureBox picHR = new PictureBox();
+        PictureBox picFrB = new PictureBox();
+        PictureBox picHM = new PictureBox();
+        PictureBox picFrR = new PictureBox();
+        PictureBox picFrL = new PictureBox();
+        PictureBox picBL = new PictureBox();
+        PictureBox picBR = new PictureBox();*/
+
         public Form1()
         {
             InitializeComponent();
+            bombenzahl = 9;
+            width = 9;
+            height = 9;
 
+            StartGame(width, height, bombenzahl);
+        }
+
+        void picEmojy_Click(object sender, MouseEventArgs e)
+        {
+            timer4.Stop();
+            for (int ix = Controls.Count - 1; ix >= 0; --ix)
+            {
+                var tmpObj = Controls[ix];
+                Controls.RemoveAt(ix);
+                if (true) tmpObj.Dispose();
+            }
             
+            this.Controls.Clear();
+            gameover = false;
+            gamewin = false;
+            timer = 0;
+            aufgedecktefelder = 0;
+            if (radioButton1.Checked == true)
+            {
+                width = 8;
+                height = 8;
+                bombenzahl = 10;
+            }
+            else if (radioButton2.Checked == true)
+            {
+                width = 16;
+                height = 16;
+                bombenzahl = 40;
+            }
+            else if (radioButton3.Checked == true)
+            {
+                width = 30;
+                height = 16;
+                bombenzahl = 99;
+            }
+            else if (radioButton4.Checked == true)
+            {
+                width = Convert.ToInt32(textBox1.Text);
+                height = Convert.ToInt32(textBox2.Text);
+                bombenzahl = Convert.ToInt32(textBox3.Text);
+            }
+            StartGame(width, height, bombenzahl);
+            // Auswertung ob Spiel verloren ist wenn Emojy geklickt wird
+            /*if (gameover == true)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        btn[x, y].Image = blankBitmap; //Umdrehen der Buttons
+                        picEmojy.Image = Properties.Resources.emojy_happy; // Emojy wieder zum lachen bringen
+                        flaggenzahl = bombenzahl; // Rücksetzen der Flaggenzahl
+                        gameover = false; // Freigeben des Spiels
+                    }
+                }
+            }*/
+        }
+
+        void button_Click(object sender, MouseEventArgs e)
+        {
+            string curtentTag = (string)((Button)sender).Tag; //auslesen des Tags
+            string[] coord = curtentTag.Split('.'); //zerteilen des Tags in die Koordinaten
+            int x = Convert.ToInt32(coord[0]);
+            int y = Convert.ToInt32(coord[1]);
+
+            if (e.Button == MouseButtons.Right && gameover == false && gamewin == false) //Prüfen, ob Rechts-Klick 
+            {
+                if (btn[x, y].Image == blankBitmap && flaggenzahl >= 1)
+                {
+                    btn[x, y].Image = flagBitmap;
+                    flaggenzahl--; //Flaggenzahl minimieren bei gesetzter Flagge
+                }
+                else if (btn[x, y].Image == flagBitmap)
+                {
+                    btn[x, y].Image = blankBitmap;
+                    flaggenzahl++; //Flaggenzahl erhöhen bei gesetzter Flagge
+                }
+                flag_counter(flaggenzahl);
+                
+            }
+            if (e.Button == MouseButtons.Left && gameover == false && gamewin == false) //Prüfen, ob Links-Klick
+            {
+                if (btn[x, y].Image != flagBitmap) // Prüfen ob eine Flagge auf dem Feld vorhanden ist
+                {
+                    countMines(x, y); //umliegende Minen zählen
+
+                    for (int i = 0; i < bombenzahl; i++)
+                    {
+                        if (x == bmb_x[i] && y == bmb_y[i])
+                        {
+                            btn[x, y].Image = redMineBitmap;
+                            gameover = true; // Für Blockade der Clicks
+                            picEmojy.Image = Properties.Resources.emojy_sad;
+                            timer4.Stop();
+                        }
+                    }
+                }
+            }
+            if (width * height - bombenzahl == aufgedecktefelder)
+            {
+                gamewin = true; // Für Blockade der Clicks
+                picEmojy.Image = Properties.Resources.emojy_cool;
+                timer4.Stop();
+            }
+            // Aufdecken der Bomben im Spiel
+            if (gameover == true)
+            {
+                for (int ix = 0; ix < width; ix++) // Durchsuchen des Spielfeldes in x-Richtung
+                {
+                    for (int iy = 0; iy < height; iy++) // Durchsuchen des Spielfeldes in y-Richtung
+                    {
+                        for (int i = 0; i < bombenzahl; i++)
+                        {
+                            //x = ix;
+                            //y = iy;
+                            if (ix == bmb_x[i] && iy == bmb_y[i])
+                            {
+                                if (btn[ix, iy].Image != redMineBitmap && btn[x,y].Image != flagBitmap) // Abfrage ob Bombe die Aufgedeckt werden soll die erste Bombe war bzw. ob Bombe durch Fahne deaktiviert ist
+                                {
+                                    btn[ix, iy].Image = mineBitmap;
+                                }
+                            }
+                            if (ix != bmb_x[i] && iy != bmb_y[i] && btn[ix, iy].Image == flagBitmap) // Abfrage falsch gesetzte Fahne
+                            {
+                                btn[ix, iy].Image = crossedMineBitmap;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void StartGame(int width, int height, int bombenzahl)
+        {
+            //InitializeComponent();
+            timer4.Start();
+            int y_corr = 23;
             int size = 16; //Buttongröße
-            this.Size = new Size(36 + width * size, 100 + height * size);
             this.MaximizeBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.BackColor = Color.FromArgb(192, 192, 192);
-            
+            this.Size = new Size(25 + width * size, 113 + height * size);
             Random random = new Random(); // Random zum erzeugen der Bombenpositionen
             int pos_x;
             int pos_y;
@@ -61,27 +218,19 @@ namespace WindowsFormsApplication1
                 pos_y = random.Next(0, height);
                 bmb_x[i] = pos_x;
                 bmb_y[i] = pos_y;
-            }
-            // Prüfung ob Bombenpositionen doppelt vorhanden sind
-            for (int i = 0; i < bombenzahl; i++)
-            {
-                for (int j = i + 1; j < bombenzahl; j++)
+                for (int j = 0; j < i; j++)
                 {
-                    if (bmb_x[j] == bmb_x[i] && bmb_y[j] == bmb_y[i])
-
+                    if (pos_x == bmb_x[j] && pos_y == bmb_y[j]) // Prüfen, ob Mine bereits vorhanden
                     {
-                        pos_x = random.Next(0, width);
-                        bmb_x[i] = pos_x;
-                        pos_y = random.Next(0, height);
-                        bmb_y[i] = pos_y;
+                        i--; //Array-Platz wird erneut beschrieben
                     }
-                }
+                } 
             }
 
             //Konfiguration des Emojy-Buttons
             picEmojy.Size = new Size(26, 26);
             picEmojy.Image = Properties.Resources.emojy_happy;
-            picEmojy.Location = new Point(10 + width * size / 2 - 13, 13);
+            picEmojy.Location = new Point(10 + width * size / 2 - 13, 13 + y_corr);
             picEmojy.TabStop = false;
             picEmojy.FlatStyle = FlatStyle.Flat;
             picEmojy.FlatAppearance.BorderSize = 0;
@@ -89,17 +238,49 @@ namespace WindowsFormsApplication1
             picEmojy.MouseClick += new MouseEventHandler(picEmojy_Click); // Klicken auf Emojy
             this.Controls.Add(picEmojy);
 
+            //Konfiguration des Counters
+            counter1.Size = new Size(13, 23);
+            counter1.Image = Properties.Resources._7S_0;
+            counter1.Location = new Point(16+13*2, 14 + y_corr);
+            this.Controls.Add(counter1);
+
+            counter2.Size = new Size(13, 23);
+            counter2.Image = Properties.Resources._7S_0;
+            counter2.Location = new Point(16 + 13, 14 + y_corr);
+            this.Controls.Add(counter2);
+
+            counter3.Size = new Size(13, 23);
+            counter3.Image = Properties.Resources._7S_0;
+            counter3.Location = new Point(16, 14 + y_corr);
+            this.Controls.Add(counter3);
+
+            //Konfiguration des Timers
+            timer1.Size = new Size(13, 23);
+            timer1.Image = Properties.Resources._7S_0;
+            timer1.Location = new Point(width * size - 9, 14 + y_corr);
+            this.Controls.Add(timer1);
+
+            timer2.Size = new Size(13, 23);
+            timer2.Image = Properties.Resources._7S_0;
+            timer2.Location = new Point(width * size - 9 - 13, 14 + y_corr);
+            this.Controls.Add(timer2);
+
+            timer3.Size = new Size(13, 23);
+            timer3.Image = Properties.Resources._7S_0;
+            timer3.Location = new Point(width * size - 9 - 13 - 13, 14 + y_corr);
+            this.Controls.Add(timer3);
+
             //Konfiguration der oberen Eckteile
             PictureBox picHL = new PictureBox();
             picHL.Size = new Size(58, 52);
             picHL.Image = Properties.Resources.head_left;
-            picHL.Location = new Point(0, 0);
+            picHL.Location = new Point(0, 0 + y_corr);
             this.Controls.Add(picHL);
 
             PictureBox picHR = new PictureBox();
             picHR.Size = new Size(58, 52);
             picHR.Image = Properties.Resources.head_right;
-            picHR.Location = new Point(width * 16 + 20 - 58, 0);
+            picHR.Location = new Point(width * 16 + 20 - 58, 0 + y_corr);
             this.Controls.Add(picHR);
 
             //Erstellen und Konfigurieren der Buttons
@@ -115,7 +296,7 @@ namespace WindowsFormsApplication1
                         PictureBox picFrB = new PictureBox();
                         picFrB.Size = new Size(16, 10);
                         picFrB.Image = FrameBitmap;
-                        picFrB.Location = new Point(x * size + 26, height * size + 52);
+                        picFrB.Location = new Point(x * size + 26, height * size + 52 + y_corr);
                         this.Controls.Add(picFrB);
                     }
                     //Konfiguration der oberen Rahmenteile
@@ -124,7 +305,7 @@ namespace WindowsFormsApplication1
                         PictureBox picHM = new PictureBox();
                         picHM.Size = new Size(16, 52);
                         picHM.Image = Properties.Resources.head_mid;
-                        picHM.Location = new Point(x * size + 10 + size * 3, 0);
+                        picHM.Location = new Point(x * size + 10 + size * 3, 0 + y_corr);
                         this.Controls.Add(picHM);
                     }
                     //Konfiguration der seitlichen Rahmenteile
@@ -133,13 +314,13 @@ namespace WindowsFormsApplication1
                         PictureBox picFrR = new PictureBox();
                         picFrR.Size = new Size(10, 16);
                         picFrR.Image = Properties.Resources.frame;
-                        picFrR.Location = new Point(width * size + 20 - 10, y * size + 52);
+                        picFrR.Location = new Point(width * size + 20 - 10, y * size + 52 + y_corr);
                         this.Controls.Add(picFrR);
 
                         PictureBox picFrL = new PictureBox();
                         picFrL.Size = new Size(10, 16);
                         picFrL.Image = Properties.Resources.frame;
-                        picFrL.Location = new Point(0, y * size + 52);
+                        picFrL.Location = new Point(0, y * size + 52 + y_corr);
                         this.Controls.Add(picFrL);
                     }
 
@@ -148,7 +329,7 @@ namespace WindowsFormsApplication1
                     btn[x, y].Tag = x + "." + y; //Koordinaten als Tag abspeichern
                     btn[x, y].Size = new Size(size + 1, size + 1);
                     btn[x, y].MouseDown += new MouseEventHandler(this.button_Click); //MouseDown -> ermöglicht Auswertung von Rechts-Klick
-                    btn[x, y].Location = new Point(x * size + 9, y * size + 51);
+                    btn[x, y].Location = new Point(x * size + 9, y * size + 51 + y_corr);
                     btn[x, y].Image = blankBitmap;
                     btn[x, y].TabStop = false;
                     btn[x, y].FlatStyle = FlatStyle.Flat;
@@ -160,108 +341,20 @@ namespace WindowsFormsApplication1
             PictureBox picBL = new PictureBox();
             picBL.Size = new Size(26, 26);
             picBL.Image = Properties.Resources.bottom_left;
-            picBL.Location = new Point(0, 52 + (height - 1) * size);
+            picBL.Location = new Point(0, 52 + (height - 1) * size + y_corr);
             this.Controls.Add(picBL);
 
             PictureBox picBR = new PictureBox();
             picBR.Size = new Size(26, 26);
             picBR.Image = Properties.Resources.bottom_right;
-            picBR.Location = new Point((width - 1) * size + 10, 52 + (height - 1) * size);
+            picBR.Location = new Point((width - 1) * size + 10, 52 + (height - 1) * size + y_corr);
             this.Controls.Add(picBR);
-    }
 
-        void picEmojy_Click(object sender, MouseEventArgs e)
-        {
-            // Auswertung ob Spiel verloren ist wenn Emojy geklickt wird
-            if (gameover == true)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    for (int y = 0; y < height; y++)
-                    {
-                        btn[x, y].Image = blankBitmap; //Umdrehen der Buttons
-                        picEmojy.Image = Properties.Resources.emojy_happy; // Emojy wieder zum lachen bringen
-                        flaggenzahl = bombenzahl; // Rücksetzen der Flaggenzahl
-                        gameover = false; // Freigeben des Spiels
-                    }
-                }
-            }
+            flaggenzahl = bombenzahl;
+
+            flag_counter(flaggenzahl);
         }
 
-        void button_Click(object sender, MouseEventArgs e)
-        {
-            string curtentTag = (string)((Button)sender).Tag; //auslesen des Tags
-            string[] coord = curtentTag.Split('.'); //zerteilen des Tags in die Koordinaten
-            int x = Convert.ToInt32(coord[0]);
-            int y = Convert.ToInt32(coord[1]);
-            // MessageBox.Show(x+ "," +y);
-            // MessageBox.Show(Convert.ToString(uncover(x,y)));
-
-            if (e.Button == MouseButtons.Right && gameover == false) //Prüfen, ob Rechts-Klick 
-            {
-                if (btn[x, y].Image == blankBitmap && flaggenzahl >= 1)
-                {
-                    btn[x, y].Image = flagBitmap;
-                    flaggenzahl--; //Flaggenzahl minimieren bei gesetzter Flagge
-                }
-                else if (btn[x, y].Image == flagBitmap)
-                {
-                    btn[x, y].Image = blankBitmap;
-                    flaggenzahl++; //Flaggenzahl erhöhen bei gesetzter Flagge
-                }
-            }
-            if (e.Button == MouseButtons.Left && gameover == false) //Prüfen, ob Links-Klick
-            {
-                if (btn[x, y].Image != flagBitmap) // Prüfen ob eine Flagge auf dem Feld vorhanden ist
-                {
-                    countMines(x, y); //umliegende Minen zählen
-
-                    for (int i = 0; i < bombenzahl; i++)
-                    {
-                        if (x == bmb_x[i] && y == bmb_y[i])
-                        {
-                            btn[x, y].Image = redMineBitmap;
-                            gameover = true; // Für Blockade der Clicks
-                            picEmojy.Image = Properties.Resources.emojy_sad;
-                        }
-                    }
-                }
-            }
-            int felderzahl = width * height; // Berechnung der Felder
-            int felderohnebomben = felderzahl - bombenzahl; // Berechnung der Felder ohne Bomben
-            if (felderohnebomben == aufgedecktefelder)
-            {
-                gamewin = true;
-                picEmojy.Image = Properties.Resources.emojy_cool;
-            }
-            // Aufdecken der Bomben im Spiel
-            if (gameover == true)
-            {
-                for (int ix = 0; ix < width; ix++) // Durchsuchen des Spielfeldes in x-Richtung
-                {
-                    for (int iy = 0; iy < height; iy++) // Durchsuchen des Spielfeldes in y-Richtung
-                    {
-                        for (int i = 0; i < bombenzahl; i++)
-                        {
-                            x = ix;
-                            y = iy;
-                            if (x == bmb_x[i] && y == bmb_y[i])
-                            {
-                                if (btn[x, y].Image != redMineBitmap && btn[x,y].Image != flagBitmap) // Abfrage ob Bombe die Aufgedeckt werden soll die erste Bombe war bzw. ob Bombe durch Fahne deaktiviert ist
-                                {
-                                    btn[x, y].Image = mineBitmap;
-                                }
-                            }
-                            if (x != bmb_x[i] && y != bmb_y[i] && btn[x, y].Image == flagBitmap) // Abfrage falsch gesetzte Fahne
-                            {
-                                btn[x, y].Image = num8Bitmap; // # Hier Durchgestrichene Bombe einfügen
-                            }
-                        }
-                    }
-                }
-            }
-        }
-  
         public void countMines(int x, int y)
         {
             int value = 0;
@@ -288,7 +381,6 @@ namespace WindowsFormsApplication1
             {
                 case 0:
                     btn[x, y].Image = uncoverBitmap;
-                    aufgedecktefelder++;
                     //Schleife zum Öffenen/Zählen der umliegenden Felder
                     for (int iy = -1; iy <= 1; iy++)
                     {
@@ -310,87 +402,97 @@ namespace WindowsFormsApplication1
                     break;
                 case 1:
                     btn[x, y].Image = num1Bitmap;
-                    aufgedecktefelder++;
                     break;
                 case 2:
                     btn[x, y].Image = num2Bitmap;
-                    aufgedecktefelder++;
                     break;
                 case 3:
                     btn[x, y].Image = num3Bitmap;
-                    aufgedecktefelder++;
                     break;
                 case 4:
                     btn[x, y].Image = num4Bitmap;
-                    aufgedecktefelder++;
                     break;
                 case 5:
                     btn[x, y].Image = num5Bitmap;
-                    aufgedecktefelder++;
                     break;
                 case 6:
                     btn[x, y].Image = num6Bitmap;
-                    aufgedecktefelder++;
                     break;
                 case 7:
                     btn[x, y].Image = num7Bitmap;
-                    aufgedecktefelder++;
                     break;
                 case 8:
                     btn[x, y].Image = num8Bitmap;
-                    aufgedecktefelder++;
                     break;
             }
             //Zähler für aufgedeckte Felder
-            /*
-            for (int cnt_x = 0; cnt_x < width; cnt_x++)
-            {
-                for (int cnt_y = 0; cnt_y < height; cnt_y++)
-                {
-                    if (btn[x, y].Image == uncoverBitmap)
-                    {
-                        aufgedecktefelder++;
-                    }
-                    if (btn[x, y].Image == num1Bitmap)
-                    {
-                        aufgedecktefelder++;
-                    }
-                    if (btn[x, y].Image == num2Bitmap)
-                    {
-                        aufgedecktefelder++;
-                    }
-                    if (btn[x, y].Image == num3Bitmap)
-                    {
-                        aufgedecktefelder++;
-                    }
-                    if (btn[x, y].Image == num4Bitmap)
-                    {
-                        aufgedecktefelder++;
-                    }
-                    if (btn[x, y].Image == num5Bitmap)
-                    {
-                        aufgedecktefelder++;
-                    }
-                    if (btn[x, y].Image == num6Bitmap)
-                    {
-                        aufgedecktefelder++;
-                    }
-                    if (btn[x, y].Image == num7Bitmap)
-                    {
-                        aufgedecktefelder++;
-                    }
-                    if (btn[x, y].Image == num8Bitmap)
-                    {
-                        aufgedecktefelder++;
-                    }
-                }
-            }
-             * */
+            aufgedecktefelder++;
         }
 
-        /*private void button1_Click(object sender, EventArgs e)
+        public void flag_counter(int flags)
         {
+            int a = flags % 10;
+            counter1.Image = sevenSegments(a);
+            flags = flags / 10;
+            int b = flags % 10;
+            counter2.Image = sevenSegments(b);
+            flags = flags / 10;
+            int c = flags % 10;
+            counter3.Image = sevenSegments(c);
+        }
 
-        }*/
+        public System.Drawing.Image sevenSegments(int counts)
+        {
+            System.Drawing.Image x;
+            switch (counts)
+            {
+                case 1: x = Properties.Resources._7S_1;
+                    break;
+                case 2: x = Properties.Resources._7S_2;
+                    break;
+                case 3: x = Properties.Resources._7S_3;
+                    break;
+                case 4: x = Properties.Resources._7S_4;
+                    break;
+                case 5: x = Properties.Resources._7S_5;
+                    break;
+                case 6: x = Properties.Resources._7S_6;
+                    break;
+                case 7: x = Properties.Resources._7S_7;
+                    break;
+                case 8: x = Properties.Resources._7S_8;
+                    break;
+                case 9: x = Properties.Resources._7S_9;
+                    break;
+                default: x = Properties.Resources._7S_0;
+                    break;
+            }
+            
+            return (x);
+        }
+
+        private void timer4_Tick(object sender, EventArgs e)
+        {
+            timer++;
+            int x = timer;
+            int a = x % 10;
+            timer1.Image = sevenSegments(a);
+            x = x / 10;
+            int b = x % 10;
+            timer2.Image = sevenSegments(b);
+            x = x / 10;
+            int c = x % 10;
+            timer3.Image = sevenSegments(c);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = false;
+        }
     }
 }
