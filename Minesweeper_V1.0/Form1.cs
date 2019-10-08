@@ -21,13 +21,13 @@ namespace WindowsFormsApplication1
         int aufgedecktefelder = 0;
         int timer = 0;
         Button[,] btn = new Button[30, 24];
-        Button picEmojy = new Button();
-        PictureBox counter1 = new PictureBox();
-        PictureBox counter2 = new PictureBox();
-        PictureBox counter3 = new PictureBox();
-        PictureBox timer1 = new PictureBox();
-        PictureBox timer2 = new PictureBox();
-        PictureBox timer3 = new PictureBox();
+        Button[] picEmojy = new Button[1]; //Definition alls Array, um die Variable nicht mit Controls.Clear() zu löschen
+        PictureBox[] counter1 = new PictureBox[1]; //Definition alls Array, um die Variable nicht mit Controls.Clear() zu löschen
+        PictureBox[] counter2 = new PictureBox[1]; //Definition alls Array, um die Variable nicht mit Controls.Clear() zu löschen
+        PictureBox[] counter3 = new PictureBox[1]; //Definition alls Array, um die Variable nicht mit Controls.Clear() zu löschen
+        PictureBox[] timer1 = new PictureBox[1]; //Definition alls Array, um die Variable nicht mit Controls.Clear() zu löschen
+        PictureBox[] timer2 = new PictureBox[1]; //Definition alls Array, um die Variable nicht mit Controls.Clear() zu löschen
+        PictureBox[] timer3 = new PictureBox[1]; //Definition alls Array, um die Variable nicht mit Controls.Clear() zu löschen
         int[] bmb_x = new Int32[667]; // Position der Bomben X-Koordinate
         int[] bmb_y = new Int32[667]; // Position der Bomben Y-Koordinate
         
@@ -47,41 +47,18 @@ namespace WindowsFormsApplication1
         Bitmap num7Bitmap = Properties.Resources.num_7;
         Bitmap num8Bitmap = Properties.Resources.num_8;
 
-        /*Random random = new Random();
-        PictureBox picHL = new PictureBox();
-        PictureBox picHR = new PictureBox();
-        PictureBox picFrB = new PictureBox();
-        PictureBox picHM = new PictureBox();
-        PictureBox picFrR = new PictureBox();
-        PictureBox picFrL = new PictureBox();
-        PictureBox picBL = new PictureBox();
-        PictureBox picBR = new PictureBox();*/
-
         public Form1()
         {
-            InitializeComponent();
-            bombenzahl = 9;
-            width = 9;
-            height = 9;
+            bombenzahl = 10;
+            width = 8;
+            height = 8;
 
             StartGame(width, height, bombenzahl);
         }
 
-        void picEmojy_Click(object sender, MouseEventArgs e)
+        void picEmojy_Click(object sender, MouseEventArgs e)//Spiel neu Starten
         {
-            timer4.Stop();
-            for (int ix = Controls.Count - 1; ix >= 0; --ix)
-            {
-                var tmpObj = Controls[ix];
-                Controls.RemoveAt(ix);
-                if (true) tmpObj.Dispose();
-            }
-            
-            this.Controls.Clear();
-            gameover = false;
-            gamewin = false;
-            timer = 0;
-            aufgedecktefelder = 0;
+            //Prüfen, welcher Modus ausgewählt ist
             if (radioButton1.Checked == true)
             {
                 width = 8;
@@ -106,21 +83,20 @@ namespace WindowsFormsApplication1
                 height = Convert.ToInt32(textBox2.Text);
                 bombenzahl = Convert.ToInt32(textBox3.Text);
             }
-            StartGame(width, height, bombenzahl);
-            // Auswertung ob Spiel verloren ist wenn Emojy geklickt wird
-            /*if (gameover == true)
+            //# hier abfrage, ob Eingabe zulässig
+            for (int ix = Controls.Count - 1; ix >= 0; --ix)//Controls-Einträge im Arbeitsspeicher löschen
             {
-                for (int x = 0; x < width; x++)
-                {
-                    for (int y = 0; y < height; y++)
-                    {
-                        btn[x, y].Image = blankBitmap; //Umdrehen der Buttons
-                        picEmojy.Image = Properties.Resources.emojy_happy; // Emojy wieder zum lachen bringen
-                        flaggenzahl = bombenzahl; // Rücksetzen der Flaggenzahl
-                        gameover = false; // Freigeben des Spiels
-                    }
-                }
-            }*/
+                var tmpObj = Controls[ix];
+                Controls.RemoveAt(ix);
+                tmpObj.Dispose();
+            }
+            timer4.Stop();
+            gameover = false;
+            gamewin = false;
+            timer = 0;
+            aufgedecktefelder = 0;
+            this.Controls.Clear(); //Alle Form-Objekte im Fenster löschen
+            StartGame(width, height, bombenzahl); //erneutes Aufrufen der StartGame-Methode
         }
 
         void button_Click(object sender, MouseEventArgs e)
@@ -157,7 +133,7 @@ namespace WindowsFormsApplication1
                         {
                             btn[x, y].Image = redMineBitmap;
                             gameover = true; // Für Blockade der Clicks
-                            picEmojy.Image = Properties.Resources.emojy_sad;
+                            picEmojy[0].Image = Properties.Resources.emojy_sad;
                             timer4.Stop();
                         }
                     }
@@ -166,7 +142,7 @@ namespace WindowsFormsApplication1
             if (width * height - bombenzahl == aufgedecktefelder)
             {
                 gamewin = true; // Für Blockade der Clicks
-                picEmojy.Image = Properties.Resources.emojy_cool;
+                picEmojy[0].Image = Properties.Resources.emojy_cool;
                 timer4.Stop();
             }
             // Aufdecken der Bomben im Spiel
@@ -178,8 +154,6 @@ namespace WindowsFormsApplication1
                     {
                         for (int i = 0; i < bombenzahl; i++)
                         {
-                            //x = ix;
-                            //y = iy;
                             if (ix == bmb_x[i] && iy == bmb_y[i])
                             {
                                 if (btn[ix, iy].Image != redMineBitmap && btn[x,y].Image != flagBitmap) // Abfrage ob Bombe die Aufgedeckt werden soll die erste Bombe war bzw. ob Bombe durch Fahne deaktiviert ist
@@ -199,9 +173,9 @@ namespace WindowsFormsApplication1
 
         public void StartGame(int width, int height, int bombenzahl)
         {
-            //InitializeComponent();
+            InitializeComponent(); //Initialisieren der über den Designer erstellten Componenten (Menü)
             timer4.Start();
-            int y_corr = 23;
+            int y_corr = 23; //y-Korrektur, um Platz für Menü zu haben
             int size = 16; //Buttongröße
             this.MaximizeBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -228,47 +202,54 @@ namespace WindowsFormsApplication1
             }
 
             //Konfiguration des Emojy-Buttons
-            picEmojy.Size = new Size(26, 26);
-            picEmojy.Image = Properties.Resources.emojy_happy;
-            picEmojy.Location = new Point(10 + width * size / 2 - 13, 13 + y_corr);
-            picEmojy.TabStop = false;
-            picEmojy.FlatStyle = FlatStyle.Flat;
-            picEmojy.FlatAppearance.BorderSize = 0;
-            picEmojy.FlatAppearance.BorderColor = Color.FromArgb(0, 255, 255, 255);
-            picEmojy.MouseClick += new MouseEventHandler(picEmojy_Click); // Klicken auf Emojy
-            this.Controls.Add(picEmojy);
+            picEmojy[0] = new Button();
+            picEmojy[0].Size = new Size(26, 26);
+            picEmojy[0].Image = Properties.Resources.emojy_happy;
+            picEmojy[0].Location = new Point(10 + width * size / 2 - 13, 13 + y_corr);
+            picEmojy[0].TabStop = false;
+            picEmojy[0].FlatStyle = FlatStyle.Flat;
+            picEmojy[0].FlatAppearance.BorderSize = 0;
+            picEmojy[0].FlatAppearance.BorderColor = Color.FromArgb(0, 255, 255, 255);
+            picEmojy[0].MouseClick += new MouseEventHandler(picEmojy_Click); // Klicken auf Emojy
+            this.Controls.Add(picEmojy[0]);
 
             //Konfiguration des Counters
-            counter1.Size = new Size(13, 23);
-            counter1.Image = Properties.Resources._7S_0;
-            counter1.Location = new Point(16+13*2, 14 + y_corr);
-            this.Controls.Add(counter1);
+            counter1[0] = new PictureBox();
+            counter1[0].Size = new Size(13, 23);
+            counter1[0].Image = Properties.Resources._7S_0;
+            counter1[0].Location = new Point(16+13*2, 14 + y_corr);
+            this.Controls.Add(counter1[0]);
 
-            counter2.Size = new Size(13, 23);
-            counter2.Image = Properties.Resources._7S_0;
-            counter2.Location = new Point(16 + 13, 14 + y_corr);
-            this.Controls.Add(counter2);
+            counter2[0] = new PictureBox();
+            counter2[0].Size = new Size(13, 23);
+            counter2[0].Image = Properties.Resources._7S_0;
+            counter2[0].Location = new Point(16 + 13, 14 + y_corr);
+            this.Controls.Add(counter2[0]);
 
-            counter3.Size = new Size(13, 23);
-            counter3.Image = Properties.Resources._7S_0;
-            counter3.Location = new Point(16, 14 + y_corr);
-            this.Controls.Add(counter3);
+            counter3[0] = new PictureBox();
+            counter3[0].Size = new Size(13, 23);
+            counter3[0].Image = Properties.Resources._7S_0;
+            counter3[0].Location = new Point(16, 14 + y_corr);
+            this.Controls.Add(counter3[0]);
 
             //Konfiguration des Timers
-            timer1.Size = new Size(13, 23);
-            timer1.Image = Properties.Resources._7S_0;
-            timer1.Location = new Point(width * size - 9, 14 + y_corr);
-            this.Controls.Add(timer1);
+            timer1[0] = new PictureBox();
+            timer1[0].Size = new Size(13, 23);
+            timer1[0].Image = Properties.Resources._7S_0;
+            timer1[0].Location = new Point(width * size - 9, 14 + y_corr);
+            this.Controls.Add(timer1[0]);
 
-            timer2.Size = new Size(13, 23);
-            timer2.Image = Properties.Resources._7S_0;
-            timer2.Location = new Point(width * size - 9 - 13, 14 + y_corr);
-            this.Controls.Add(timer2);
+            timer2[0] = new PictureBox();
+            timer2[0].Size = new Size(13, 23);
+            timer2[0].Image = Properties.Resources._7S_0;
+            timer2[0].Location = new Point(width * size - 9 - 13, 14 + y_corr);
+            this.Controls.Add(timer2[0]);
 
-            timer3.Size = new Size(13, 23);
-            timer3.Image = Properties.Resources._7S_0;
-            timer3.Location = new Point(width * size - 9 - 13 - 13, 14 + y_corr);
-            this.Controls.Add(timer3);
+            timer3[0] = new PictureBox();
+            timer3[0].Size = new Size(13, 23);
+            timer3[0].Image = Properties.Resources._7S_0;
+            timer3[0].Location = new Point(width * size - 9 - 13 - 13, 14 + y_corr);
+            this.Controls.Add(timer3[0]);
 
             //Konfiguration der oberen Eckteile
             PictureBox picHL = new PictureBox();
@@ -323,7 +304,6 @@ namespace WindowsFormsApplication1
                         picFrL.Location = new Point(0, y * size + 52 + y_corr);
                         this.Controls.Add(picFrL);
                     }
-
                     btn[x, y] = new Button();
                     btn[x, y].Name = "Button" + x + y;
                     btn[x, y].Tag = x + "." + y; //Koordinaten als Tag abspeichern
@@ -432,13 +412,13 @@ namespace WindowsFormsApplication1
         public void flag_counter(int flags)
         {
             int a = flags % 10;
-            counter1.Image = sevenSegments(a);
+            counter1[0].Image = sevenSegments(a);
             flags = flags / 10;
             int b = flags % 10;
-            counter2.Image = sevenSegments(b);
+            counter2[0].Image = sevenSegments(b);
             flags = flags / 10;
             int c = flags % 10;
-            counter3.Image = sevenSegments(c);
+            counter3[0].Image = sevenSegments(c);
         }
 
         public System.Drawing.Image sevenSegments(int counts)
@@ -476,13 +456,13 @@ namespace WindowsFormsApplication1
             timer++;
             int x = timer;
             int a = x % 10;
-            timer1.Image = sevenSegments(a);
+            timer1[0].Image = sevenSegments(a);
             x = x / 10;
             int b = x % 10;
-            timer2.Image = sevenSegments(b);
+            timer2[0].Image = sevenSegments(b);
             x = x / 10;
             int c = x % 10;
-            timer3.Image = sevenSegments(c);
+            timer3[0].Image = sevenSegments(c);
         }
 
         private void button1_Click(object sender, EventArgs e)
