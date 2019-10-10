@@ -79,9 +79,9 @@ namespace WindowsFormsApplication1
             }
             else if (radioButton4.Checked == true)
             {
-                width = Convert.ToInt32(textBox1.Text);
-                height = Convert.ToInt32(textBox2.Text);
-                bombenzahl = Convert.ToInt32(textBox3.Text);
+                width = Convert.ToInt32(WidthTextBox.Text);
+                height = Convert.ToInt32(HeightTextBox.Text);
+                bombenzahl = Convert.ToInt32(MinesTextBox.Text);
             }
             //# hier abfrage, ob Eingabe zulässig
             for (int ix = Controls.Count - 1; ix >= 0; --ix)//Controls-Einträge im Arbeitsspeicher löschen
@@ -467,12 +467,37 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            panel1.Visible = true;
+            panel1.Visible = !panel1.Visible;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            
+            width = Convert.ToInt32(WidthTextBox.Text); // eingabe überprüfen 
+            if (width > 30) width = 30;
+            if (width < 8) width = 8;
+            WidthTextBox.Text = width.ToString();
+
+            height = Convert.ToInt32(HeightTextBox.Text);
+            if (height > 24) height = 24;
+            if (height < 8) height = 8;
+            HeightTextBox.Text = height.ToString();
+
+            bombenzahl = Convert.ToInt32(MinesTextBox.Text);
+            if (bombenzahl > 99) bombenzahl = 99;
+            if (bombenzahl < 10) bombenzahl = 10;
+            MinesTextBox.Text = bombenzahl.ToString();
+
             panel1.Visible = false;
+            if (picEmojy[0] != null) //Button übrprüfen ob er da ist 
+                picEmojy_Click(picEmojy[0], null);                
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+     
     }
 }
