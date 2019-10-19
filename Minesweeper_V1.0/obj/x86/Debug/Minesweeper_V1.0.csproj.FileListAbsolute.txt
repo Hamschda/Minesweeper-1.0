@@ -36,3 +36,7 @@ C:\Users\acer\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Min
 C:\Users\acer\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.application
 C:\Users\acer\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.exe
 C:\Users\acer\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.pdb
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.exe.manifest
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.application
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.exe.manifest
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.application

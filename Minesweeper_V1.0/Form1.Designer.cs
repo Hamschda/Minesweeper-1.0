@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.timer4 = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.GameButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.OK_Button = new System.Windows.Forms.Button();
             this.MinesTextBox = new System.Windows.Forms.TextBox();
             this.HeightTextBox = new System.Windows.Forms.TextBox();
             this.WidthTextBox = new System.Windows.Forms.TextBox();
@@ -51,23 +51,23 @@
             this.timer4.Interval = 1000;
             this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
             // 
-            // button1
+            // GameButton
             // 
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(0, 1);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(52, 21);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Game";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.GameButton.FlatAppearance.BorderSize = 0;
+            this.GameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GameButton.Location = new System.Drawing.Point(0, 1);
+            this.GameButton.Margin = new System.Windows.Forms.Padding(2);
+            this.GameButton.Name = "GameButton";
+            this.GameButton.Size = new System.Drawing.Size(52, 21);
+            this.GameButton.TabIndex = 1;
+            this.GameButton.Text = "Game";
+            this.GameButton.UseVisualStyleBackColor = true;
+            this.GameButton.Click += new System.EventHandler(this.GameButton_Click);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Menu;
-            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.OK_Button);
             this.panel1.Controls.Add(this.MinesTextBox);
             this.panel1.Controls.Add(this.HeightTextBox);
             this.panel1.Controls.Add(this.WidthTextBox);
@@ -85,17 +85,17 @@
             this.panel1.TabIndex = 0;
             this.panel1.Visible = false;
             // 
-            // button2
+            // OK_Button
             // 
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(6, 126);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(52, 22);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "OK";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.OK_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OK_Button.Location = new System.Drawing.Point(6, 126);
+            this.OK_Button.Margin = new System.Windows.Forms.Padding(2);
+            this.OK_Button.Name = "OK_Button";
+            this.OK_Button.Size = new System.Drawing.Size(52, 22);
+            this.OK_Button.TabIndex = 11;
+            this.OK_Button.Text = "OK";
+            this.OK_Button.UseVisualStyleBackColor = true;
+            this.OK_Button.Click += new System.EventHandler(this.OK_Button_Click);
             // 
             // MinesTextBox
             // 
@@ -190,13 +190,11 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(6, 7);
             this.radioButton1.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(67, 17);
             this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Beginner";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
@@ -205,7 +203,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(328, 293);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.GameButton);
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
@@ -225,7 +223,7 @@
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button GameButton;
         private System.Windows.Forms.TextBox MinesTextBox;
         private System.Windows.Forms.TextBox HeightTextBox;
         private System.Windows.Forms.TextBox WidthTextBox;
@@ -233,7 +231,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button OK_Button;
 
 
     }

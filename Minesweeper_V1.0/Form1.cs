@@ -16,6 +16,7 @@ namespace WindowsFormsApplication1
         int flaggenzahl; // Anzahl der Flaggen
         bool gameover = false;
         bool gamewin = false;
+        bool firstgame = true;
         int width; //Spielfeldbreie
         int height; //Spielfeldhöhe
         int aufgedecktefelder = 0;
@@ -49,41 +50,53 @@ namespace WindowsFormsApplication1
 
         public Form1()
         {
-            bombenzahl = 10;
-            width = 8;
-            height = 8;
+            if (firstgame == true)
+            {
+                bombenzahl = 10;
+                width = 8;
+                height = 8;
 
-            StartGame(width, height, bombenzahl);
+                StartGame(width, height, bombenzahl);
+            }
+            if (firstgame == false)
+            {
+                StartGame(width, height, bombenzahl);
+            }
+
         }
 
         void picEmojy_Click(object sender, MouseEventArgs e)//Spiel neu Starten
         {
+            firstgame = false;
             //Prüfen, welcher Modus ausgewählt ist
-            if (radioButton1.Checked == true)
+            if (radioButton1.Checked == true) //Beginner Modus
             {
                 width = 8;
                 height = 8;
                 bombenzahl = 10;
+                radioButton1.Checked = true;
             }
-            else if (radioButton2.Checked == true)
+            else if (radioButton2.Checked == true) // Intermediate Modus
             {
                 width = 16;
                 height = 16;
                 bombenzahl = 40;
+                radioButton2.Checked = true;
             }
-            else if (radioButton3.Checked == true)
+            else if (radioButton3.Checked == true) // Expert Modus
             {
                 width = 30;
                 height = 16;
                 bombenzahl = 99;
+                radioButton3.Checked = true;
             }
-            else if (radioButton4.Checked == true)
+            else if (radioButton4.Checked == true) // Costum Modus
             {
                 width = Convert.ToInt32(WidthTextBox.Text);
                 height = Convert.ToInt32(HeightTextBox.Text);
                 bombenzahl = Convert.ToInt32(MinesTextBox.Text);
+                radioButton4.Checked = true;
             }
-            //# hier abfrage, ob Eingabe zulässig
             for (int ix = Controls.Count - 1; ix >= 0; --ix)//Controls-Einträge im Arbeitsspeicher löschen
             {
                 var tmpObj = Controls[ix];
@@ -465,12 +478,12 @@ namespace WindowsFormsApplication1
             timer3[0].Image = sevenSegments(c);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void GameButton_Click(object sender, EventArgs e) 
         {
             panel1.Visible = !panel1.Visible;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void OK_Button_Click(object sender, EventArgs e)
         {
             
             width = Convert.ToInt32(WidthTextBox.Text); // eingabe überprüfen 
@@ -492,7 +505,31 @@ namespace WindowsFormsApplication1
             if (picEmojy[0] != null) //Button übrprüfen ob er da ist 
                 picEmojy_Click(picEmojy[0], null);                
         }
-
+        // Vorbereitung für das anzeigen der eingestellten Parameter
+        /*
+                    if (radioButton1.Checked == true)
+            {
+                radioButton1.Checked = true;
+            }
+            if (radioButton2.Checked == true)
+            {
+                radioButton2.Checked = true;
+            }
+            if (radioButton3.Checked == true)
+            {
+                radioButton3.Checked = true;
+            }
+            if (radioButton4.Checked == true)
+            {
+                radioButton4.Checked = true;
+                if ((width != 8) || (height != 8) || (bombenzahl != 10))
+                {
+                    WidthTextBox.Text = Convert.ToString(width);
+                    HeightTextBox.Text = Convert.ToString(height);
+                    MinesTextBox.Text = Convert.ToString(bombenzahl);
+                }
+            }
+        */
         private void Form1_Load(object sender, EventArgs e)
         {
 
