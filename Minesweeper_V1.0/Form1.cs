@@ -33,7 +33,6 @@ namespace WindowsFormsApplication1
         int[] bmb_x = new Int32[667]; // Position der Bomben X-Koordinate
         int[] bmb_y = new Int32[667]; // Position der Bomben Y-Koordinate
         
-
         Bitmap blankBitmap = Properties.Resources.blank; // Abspeichern der Resourcen in Variablen
         Bitmap uncoverBitmap = Properties.Resources.uncover;
         Bitmap flagBitmap = Properties.Resources.flag;
@@ -63,7 +62,6 @@ namespace WindowsFormsApplication1
             {
                 StartGame(width, height, bombenzahl);
             }*/
-
         }
 
         void picEmojy_Click(object sender, MouseEventArgs e)//Spiel neu Starten
@@ -115,7 +113,7 @@ namespace WindowsFormsApplication1
             aufgedecktefelder = 0;
             this.Controls.Clear(); //Alle Form-Objekte im Fenster löschen
             StartGame(width, height, bombenzahl); //erneutes Aufrufen der StartGame-Methode
-            switch (saveRadioBtn)
+            switch (saveRadioBtn) //Prüfen, welcher Radiobutton aktiv war
             {
                 case 1:
                     radioButton1.Checked = true;
@@ -300,7 +298,7 @@ namespace WindowsFormsApplication1
             picHR.Location = new Point(width * 16 + 20 - 58, 0 + y_corr);
             this.Controls.Add(picHR);
 
-            //Erstellen und Konfigurieren der Buttons
+            //Schleife zum erstellen wiederholender Teile
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
@@ -340,6 +338,7 @@ namespace WindowsFormsApplication1
                         picFrL.Location = new Point(0, y * size + 52 + y_corr);
                         this.Controls.Add(picFrL);
                     }
+                    //Erstellen und Konfigurieren der Buttons
                     btn[x, y] = new Button();
                     btn[x, y].Name = "Button" + x + y;
                     btn[x, y].Tag = x + "." + y; //Koordinaten als Tag abspeichern
@@ -354,6 +353,7 @@ namespace WindowsFormsApplication1
                     this.Controls.Add(btn[x, y]);
                 }
             }
+            //Konfiguration der unteren Eckteile
             PictureBox picBL = new PictureBox();
             picBL.Size = new Size(26, 26);
             picBL.Image = Properties.Resources.bottom_left;
@@ -445,10 +445,10 @@ namespace WindowsFormsApplication1
             aufgedecktefelder++;
         }
 
-        public void flag_counter(int flags)
+        public void flag_counter(int flags)//Grafischer Zähler der übrigen Flaggen
         {
-            int a = flags % 10;
-            counter1[0].Image = sevenSegments(a);
+            int a = flags % 10;//Aufteilen des Zählwertes in Ziffern
+            counter1[0].Image = sevenSegments(a);//Ausgabe des Werts über 7-Segment-Anzeige
             flags = flags / 10;
             int b = flags % 10;
             counter2[0].Image = sevenSegments(b);
@@ -457,7 +457,7 @@ namespace WindowsFormsApplication1
             counter3[0].Image = sevenSegments(c);
         }
 
-        public System.Drawing.Image sevenSegments(int counts)
+        public System.Drawing.Image sevenSegments(int counts)//Methode zum deffinieren der Grafikelemente der 7-Segment-Anzeigen
         {
             System.Drawing.Image x;
             switch (counts)
@@ -483,16 +483,15 @@ namespace WindowsFormsApplication1
                 default: x = Properties.Resources._7S_0;
                     break;
             }
-            
             return (x);
         }
 
-        private void timer4_Tick(object sender, EventArgs e)
+        private void timer4_Tick(object sender, EventArgs e)//Grafische Stoppuhr
         {
-            timer++;
+            timer++;//Zählwert
             int x = timer;
-            int a = x % 10;
-            timer1[0].Image = sevenSegments(a);
+            int a = x % 10;//Aufteilen des Zählwertes in Ziffern
+            timer1[0].Image = sevenSegments(a);//Ausgabe des Werts über 7-Segment-Anzeige
             x = x / 10;
             int b = x % 10;
             timer2[0].Image = sevenSegments(b);
@@ -556,8 +555,6 @@ namespace WindowsFormsApplication1
         private void Form1_Load(object sender, EventArgs e)
         {
 
-        }
-
-     
+        }   
     }
 }
