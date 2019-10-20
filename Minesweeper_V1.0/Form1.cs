@@ -16,11 +16,12 @@ namespace WindowsFormsApplication1
         int flaggenzahl; // Anzahl der Flaggen
         bool gameover = false;
         bool gamewin = false;
-        bool firstgame = true;
+        //bool firstgame = true;
         int width; //Spielfeldbreie
         int height; //Spielfeldhöhe
         int aufgedecktefelder = 0;
         int timer = 0;
+        int saveRadioBtn = 0;
         Button[,] btn = new Button[30, 24];
         Button[] picEmojy = new Button[1]; //Definition alls Array, um die Variable nicht mit Controls.Clear() zu löschen
         PictureBox[] counter1 = new PictureBox[1]; //Definition alls Array, um die Variable nicht mit Controls.Clear() zu löschen
@@ -50,27 +51,28 @@ namespace WindowsFormsApplication1
 
         public Form1()
         {
-            if (firstgame == true)
-            {
+            //if (firstgame == true)
+            //{
                 bombenzahl = 10;
                 width = 8;
                 height = 8;
 
                 StartGame(width, height, bombenzahl);
-            }
-            if (firstgame == false)
+            //}
+            /*if (firstgame == false)
             {
                 StartGame(width, height, bombenzahl);
-            }
+            }*/
 
         }
 
         void picEmojy_Click(object sender, MouseEventArgs e)//Spiel neu Starten
         {
-            firstgame = false;
+            //firstgame = false;
             //Prüfen, welcher Modus ausgewählt ist
             if (radioButton1.Checked == true) //Beginner Modus
             {
+                saveRadioBtn = 1;
                 width = 8;
                 height = 8;
                 bombenzahl = 10;
@@ -78,6 +80,7 @@ namespace WindowsFormsApplication1
             }
             else if (radioButton2.Checked == true) // Intermediate Modus
             {
+                saveRadioBtn = 2;
                 width = 16;
                 height = 16;
                 bombenzahl = 40;
@@ -85,6 +88,7 @@ namespace WindowsFormsApplication1
             }
             else if (radioButton3.Checked == true) // Expert Modus
             {
+                saveRadioBtn = 3;
                 width = 30;
                 height = 16;
                 bombenzahl = 99;
@@ -92,6 +96,7 @@ namespace WindowsFormsApplication1
             }
             else if (radioButton4.Checked == true) // Costum Modus
             {
+                saveRadioBtn = 4;
                 width = Convert.ToInt32(WidthTextBox.Text);
                 height = Convert.ToInt32(HeightTextBox.Text);
                 bombenzahl = Convert.ToInt32(MinesTextBox.Text);
@@ -110,6 +115,24 @@ namespace WindowsFormsApplication1
             aufgedecktefelder = 0;
             this.Controls.Clear(); //Alle Form-Objekte im Fenster löschen
             StartGame(width, height, bombenzahl); //erneutes Aufrufen der StartGame-Methode
+            switch (saveRadioBtn)
+            {
+                case 1:
+                    radioButton1.Checked = true;
+                    break;
+                case 2:
+                    radioButton2.Checked = true;
+                    break;
+                case 3:
+                    radioButton3.Checked = true;
+                    break;
+                case 4:
+                    radioButton4.Checked = true;
+                    break;
+            }
+            WidthTextBox.Text = Convert.ToString(width);
+            HeightTextBox.Text = Convert.ToString(height);
+            MinesTextBox.Text = Convert.ToString(bombenzahl);
         }
 
         void button_Click(object sender, MouseEventArgs e)
@@ -485,7 +508,6 @@ namespace WindowsFormsApplication1
 
         private void OK_Button_Click(object sender, EventArgs e)
         {
-            
             width = Convert.ToInt32(WidthTextBox.Text); // eingabe überprüfen 
             if (width > 30) width = 30;
             if (width < 8) width = 8;
@@ -502,8 +524,9 @@ namespace WindowsFormsApplication1
             MinesTextBox.Text = bombenzahl.ToString();
 
             panel1.Visible = false;
+
             if (picEmojy[0] != null) //Button übrprüfen ob er da ist 
-                picEmojy_Click(picEmojy[0], null);                
+                picEmojy_Click(picEmojy[0], null);  
         }
         // Vorbereitung für das anzeigen der eingestellten Parameter
         /*

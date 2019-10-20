@@ -40,3 +40,7 @@ D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.e
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.application
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.exe.manifest
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.application
+C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.exe.manifest
+C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.application
+C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.exe.manifest
+C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.application
