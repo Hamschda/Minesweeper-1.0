@@ -16,7 +16,6 @@ namespace WindowsFormsApplication1
         int flaggenzahl; // Anzahl der Flaggen
         bool gameover = false;
         bool gamewin = false;
-        //bool firstgame = true;
         int width; //Spielfeldbreie
         int height; //Spielfeldhöhe
         int aufgedecktefelder = 0;
@@ -50,159 +49,12 @@ namespace WindowsFormsApplication1
 
         public Form1()
         {
-            //if (firstgame == true)
-            //{
                 bombenzahl = 10;
                 width = 8;
                 height = 8;
 
                 StartGame(width, height, bombenzahl);
-            //}
-            /*if (firstgame == false)
-            {
-                StartGame(width, height, bombenzahl);
-            }*/
-        }
-
-        void picEmojy_Click(object sender, MouseEventArgs e)//Spiel neu Starten
-        {
-            //firstgame = false;
-            //Prüfen, welcher Modus ausgewählt ist
-            if (radioButton1.Checked == true) //Beginner Modus
-            {
-                saveRadioBtn = 1;
-                width = 8;
-                height = 8;
-                bombenzahl = 10;
                 radioButton1.Checked = true;
-            }
-            else if (radioButton2.Checked == true) // Intermediate Modus
-            {
-                saveRadioBtn = 2;
-                width = 16;
-                height = 16;
-                bombenzahl = 40;
-                radioButton2.Checked = true;
-            }
-            else if (radioButton3.Checked == true) // Expert Modus
-            {
-                saveRadioBtn = 3;
-                width = 30;
-                height = 16;
-                bombenzahl = 99;
-                radioButton3.Checked = true;
-            }
-            else if (radioButton4.Checked == true) // Costum Modus
-            {
-                saveRadioBtn = 4;
-                width = Convert.ToInt32(WidthTextBox.Text);
-                height = Convert.ToInt32(HeightTextBox.Text);
-                bombenzahl = Convert.ToInt32(MinesTextBox.Text);
-                radioButton4.Checked = true;
-            }
-            for (int ix = Controls.Count - 1; ix >= 0; --ix)//Controls-Einträge im Arbeitsspeicher löschen
-            {
-                var tmpObj = Controls[ix];
-                Controls.RemoveAt(ix);
-                tmpObj.Dispose();
-            }
-            timer4.Stop();
-            gameover = false;
-            gamewin = false;
-            timer = 0;
-            aufgedecktefelder = 0;
-            this.Controls.Clear(); //Alle Form-Objekte im Fenster löschen
-            StartGame(width, height, bombenzahl); //erneutes Aufrufen der StartGame-Methode
-            switch (saveRadioBtn) //Prüfen, welcher Radiobutton aktiv war
-            {
-                case 1:
-                    radioButton1.Checked = true;
-                    break;
-                case 2:
-                    radioButton2.Checked = true;
-                    break;
-                case 3:
-                    radioButton3.Checked = true;
-                    break;
-                case 4:
-                    radioButton4.Checked = true;
-                    break;
-            }
-            WidthTextBox.Text = Convert.ToString(width);
-            HeightTextBox.Text = Convert.ToString(height);
-            MinesTextBox.Text = Convert.ToString(bombenzahl);
-        }
-
-        void button_Click(object sender, MouseEventArgs e)
-        {
-            string curtentTag = (string)((Button)sender).Tag; //auslesen des Tags
-            string[] coord = curtentTag.Split('.'); //zerteilen des Tags in die Koordinaten
-            int x = Convert.ToInt32(coord[0]);
-            int y = Convert.ToInt32(coord[1]);
-
-            if (e.Button == MouseButtons.Right && gameover == false && gamewin == false) //Prüfen, ob Rechts-Klick 
-            {
-                if (btn[x, y].Image == blankBitmap && flaggenzahl >= 1)
-                {
-                    btn[x, y].Image = flagBitmap;
-                    flaggenzahl--; //Flaggenzahl minimieren bei gesetzter Flagge
-                }
-                else if (btn[x, y].Image == flagBitmap)
-                {
-                    btn[x, y].Image = blankBitmap;
-                    flaggenzahl++; //Flaggenzahl erhöhen bei gesetzter Flagge
-                }
-                flag_counter(flaggenzahl);
-                
-            }
-            if (e.Button == MouseButtons.Left && gameover == false && gamewin == false) //Prüfen, ob Links-Klick
-            {
-                if (btn[x, y].Image != flagBitmap) // Prüfen ob eine Flagge auf dem Feld vorhanden ist
-                {
-                    countMines(x, y); //umliegende Minen zählen
-
-                    for (int i = 0; i < bombenzahl; i++)
-                    {
-                        if (x == bmb_x[i] && y == bmb_y[i])
-                        {
-                            btn[x, y].Image = redMineBitmap;
-                            gameover = true; // Für Blockade der Clicks
-                            picEmojy[0].Image = Properties.Resources.emojy_sad;
-                            timer4.Stop();
-                        }
-                    }
-                }
-            }
-            if (width * height - bombenzahl == aufgedecktefelder)
-            {
-                gamewin = true; // Für Blockade der Clicks
-                picEmojy[0].Image = Properties.Resources.emojy_cool;
-                timer4.Stop();
-            }
-            // Aufdecken der Bomben im Spiel
-            if (gameover == true)
-            {
-                for (int ix = 0; ix < width; ix++) // Durchsuchen des Spielfeldes in x-Richtung
-                {
-                    for (int iy = 0; iy < height; iy++) // Durchsuchen des Spielfeldes in y-Richtung
-                    {
-                        for (int i = 0; i < bombenzahl; i++)
-                        {
-                            if (ix == bmb_x[i] && iy == bmb_y[i])
-                            {
-                                if (btn[ix, iy].Image != redMineBitmap && btn[x,y].Image != flagBitmap) // Abfrage ob Bombe die Aufgedeckt werden soll die erste Bombe war bzw. ob Bombe durch Fahne deaktiviert ist
-                                {
-                                    btn[ix, iy].Image = mineBitmap;
-                                }
-                            }
-                            if (ix != bmb_x[i] && iy != bmb_y[i] && btn[ix, iy].Image == flagBitmap) // Abfrage falsch gesetzte Fahne
-                            {
-                                btn[ix, iy].Image = crossedMineBitmap;
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         public void StartGame(int width, int height, int bombenzahl)
@@ -371,6 +223,142 @@ namespace WindowsFormsApplication1
             flag_counter(flaggenzahl);
         }
 
+        void picEmojy_Click(object sender, MouseEventArgs e)//Spiel neu Starten
+        {
+            //Prüfen, welcher Modus ausgewählt ist
+            if (radioButton1.Checked == true) //Beginner Modus
+            {
+                saveRadioBtn = 1;
+                width = 8;
+                height = 8;
+                bombenzahl = 10;
+            }
+            else if (radioButton2.Checked == true) // Intermediate Modus
+            {
+                saveRadioBtn = 2;
+                width = 16;
+                height = 16;
+                bombenzahl = 40;
+            }
+            else if (radioButton3.Checked == true) // Expert Modus
+            {
+                saveRadioBtn = 3;
+                width = 30;
+                height = 16;
+                bombenzahl = 99;
+            }
+            else if (radioButton4.Checked == true) // Costum Modus
+            {
+                saveRadioBtn = 4;
+                width = Convert.ToInt32(WidthTextBox.Text);
+                height = Convert.ToInt32(HeightTextBox.Text);
+                bombenzahl = Convert.ToInt32(MinesTextBox.Text);
+            }
+            for (int ix = Controls.Count - 1; ix >= 0; --ix)//Controls-Einträge im Arbeitsspeicher löschen
+            {
+                var tmpObj = Controls[ix];
+                Controls.RemoveAt(ix);
+                tmpObj.Dispose();
+            }
+            timer4.Stop();
+            gameover = false;
+            gamewin = false;
+            timer = 0;
+            aufgedecktefelder = 0;
+            this.Controls.Clear(); //Alle Form-Objekte im Fenster löschen
+            StartGame(width, height, bombenzahl); //erneutes Aufrufen der StartGame-Methode
+            switch (saveRadioBtn) //Prüfen, welcher Radiobutton aktiv war
+            {
+                case 1:
+                    radioButton1.Checked = true;
+                    break;
+                case 2:
+                    radioButton2.Checked = true;
+                    break;
+                case 3:
+                    radioButton3.Checked = true;
+                    break;
+                case 4:
+                    radioButton4.Checked = true;
+                    break;
+            }
+            WidthTextBox.Text = Convert.ToString(width);
+            HeightTextBox.Text = Convert.ToString(height);
+            MinesTextBox.Text = Convert.ToString(bombenzahl);
+        }
+
+        void button_Click(object sender, MouseEventArgs e)
+        {
+            string curtentTag = (string)((Button)sender).Tag; //auslesen des Tags
+            string[] coord = curtentTag.Split('.'); //zerteilen des Tags in die Koordinaten
+            int x = Convert.ToInt32(coord[0]);
+            int y = Convert.ToInt32(coord[1]);
+
+            if (e.Button == MouseButtons.Right && gameover == false && gamewin == false) //Prüfen, ob Rechts-Klick 
+            {
+                if (btn[x, y].Image == blankBitmap && flaggenzahl >= 1)
+                {
+                    btn[x, y].Image = flagBitmap;
+                    flaggenzahl--; //Flaggenzahl minimieren bei gesetzter Flagge
+                }
+                else if (btn[x, y].Image == flagBitmap)
+                {
+                    btn[x, y].Image = blankBitmap;
+                    flaggenzahl++; //Flaggenzahl erhöhen bei gesetzter Flagge
+                }
+                flag_counter(flaggenzahl);
+                
+            }
+            if (e.Button == MouseButtons.Left && gameover == false && gamewin == false) //Prüfen, ob Links-Klick
+            {
+                if (btn[x, y].Image != flagBitmap) // Prüfen ob eine Flagge auf dem Feld vorhanden ist
+                {
+                    countMines(x, y); //umliegende Minen zählen
+
+                    for (int i = 0; i < bombenzahl; i++)
+                    {
+                        if (x == bmb_x[i] && y == bmb_y[i])
+                        {
+                            btn[x, y].Image = redMineBitmap;
+                            gameover = true; // Für Blockade der Clicks
+                            picEmojy[0].Image = Properties.Resources.emojy_sad;
+                            timer4.Stop();
+                        }
+                    }
+                }
+            }
+            if (width * height - bombenzahl == aufgedecktefelder)
+            {
+                gamewin = true; // Für Blockade der Clicks
+                picEmojy[0].Image = Properties.Resources.emojy_cool;
+                timer4.Stop();
+            }
+            // Aufdecken der Bomben im Spiel
+            if (gameover == true)
+            {
+                for (int ix = 0; ix < width; ix++) // Durchsuchen des Spielfeldes in x-Richtung
+                {
+                    for (int iy = 0; iy < height; iy++) // Durchsuchen des Spielfeldes in y-Richtung
+                    {
+                        for (int i = 0; i < bombenzahl; i++)
+                        {
+                            if (ix == bmb_x[i] && iy == bmb_y[i])
+                            {
+                                if (btn[ix, iy].Image != redMineBitmap && btn[x,y].Image != flagBitmap) // Abfrage ob Bombe die Aufgedeckt werden soll die erste Bombe war bzw. ob Bombe durch Fahne deaktiviert ist
+                                {
+                                    btn[ix, iy].Image = mineBitmap;
+                                }
+                            }
+                            if (ix != bmb_x[i] && iy != bmb_y[i] && btn[ix, iy].Image == flagBitmap) // Abfrage falsch gesetzte Fahne
+                            {
+                                btn[ix, iy].Image = crossedMineBitmap;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public void countMines(int x, int y)
         {
             int value = 0;
@@ -527,31 +515,7 @@ namespace WindowsFormsApplication1
             if (picEmojy[0] != null) //Button übrprüfen ob er da ist 
                 picEmojy_Click(picEmojy[0], null);  
         }
-        // Vorbereitung für das anzeigen der eingestellten Parameter
-        /*
-                    if (radioButton1.Checked == true)
-            {
-                radioButton1.Checked = true;
-            }
-            if (radioButton2.Checked == true)
-            {
-                radioButton2.Checked = true;
-            }
-            if (radioButton3.Checked == true)
-            {
-                radioButton3.Checked = true;
-            }
-            if (radioButton4.Checked == true)
-            {
-                radioButton4.Checked = true;
-                if ((width != 8) || (height != 8) || (bombenzahl != 10))
-                {
-                    WidthTextBox.Text = Convert.ToString(width);
-                    HeightTextBox.Text = Convert.ToString(height);
-                    MinesTextBox.Text = Convert.ToString(bombenzahl);
-                }
-            }
-        */
+       
         private void Form1_Load(object sender, EventArgs e)
         {
 
