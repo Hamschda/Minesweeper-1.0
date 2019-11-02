@@ -304,7 +304,7 @@ namespace WindowsFormsApplication1
                 else if (btn[x, y].Image == flagBitmap)
                 {
                     btn[x, y].Image = blankBitmap;
-                    flaggenzahl++; //Flaggenzahl erhöhen bei gesetzter Flagge
+                    flaggenzahl++; //Flaggenzahl erhöhen bei entfernter Flagge
                 }
                 flag_counter(flaggenzahl);
                 
