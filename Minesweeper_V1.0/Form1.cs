@@ -60,7 +60,6 @@ namespace WindowsFormsApplication1
         public void StartGame(int width, int height, int bombenzahl)
         {
             InitializeComponent(); //Initialisieren der über den Designer erstellten Componenten (Menü)
-            timer4.Start();
             int y_corr = 23; //y-Korrektur, um Platz für Menü zu haben
             int size = 16; //Buttongröße
             this.MaximizeBox = false;
@@ -311,7 +310,8 @@ namespace WindowsFormsApplication1
             }
             if (e.Button == MouseButtons.Left && gameover == false && gamewin == false) //Prüfen, ob Links-Klick
             {
-                if (btn[x, y].Image != flagBitmap) // Prüfen ob eine Flagge auf dem Feld vorhanden ist
+                timer4.Start();
+                if (btn[x, y].Image == blankBitmap) // Prüfen ob eine Flagge auf dem Feld vorhanden ist
                 {
                     countMines(x, y); //umliegende Minen zählen
 
