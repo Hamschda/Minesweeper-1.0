@@ -1,10 +1,6 @@
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Release\Minesweeper_V1.0.exe
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Release\Minesweeper_V1.0.pdb
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\WindowsFormsApplication1.Form1.resources
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\WindowsFormsApplication1.Properties.Resources.resources
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper_V1.0.csproj.GenerateResource.Cache
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper_V1.0.exe
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper_V1.0.pdb
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper_V1.0.csprojResolveAssemblyReference.cache
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper_V1.0.csprojResolveAssemblyReference.cache
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\WindowsFormsApplication1.Form1.resources
@@ -30,3 +26,11 @@ C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper.application
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper.exe
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper.pdb
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Release\Minesweeper.exe.manifest
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Release\Minesweeper.application
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Release\Minesweeper.exe
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Release\Minesweeper.pdb
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper.exe.manifest
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper.application
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper.exe
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Release\Minesweeper.pdb

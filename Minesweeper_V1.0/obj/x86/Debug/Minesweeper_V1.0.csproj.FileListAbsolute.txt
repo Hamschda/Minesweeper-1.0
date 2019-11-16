@@ -11,10 +11,6 @@ C:\Users\Felix\Downloads\Minesweeper-2c06dc03db741f8dee6485be14f28bc08186346e\Mi
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.csprojResolveAssemblyReference.cache
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.csproj.GenerateResource.Cache
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.exe
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.pdb
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.exe
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.pdb
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.csprojResolveAssemblyReference.cache
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\WindowsFormsApplication1.Form1.resources
 D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
@@ -32,10 +28,6 @@ C:\Users\acer\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Min
 C:\Users\acer\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.application
 C:\Users\acer\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.exe
 C:\Users\acer\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.pdb
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.exe.manifest
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper_V1.0.application
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.exe.manifest
-D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper_V1.0.application
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper.exe.manifest
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper.application
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper.exe
@@ -44,3 +36,11 @@ C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper.application
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper.exe
 C:\Users\Felix\Documents\Schule\FTAT3\IT\Minesweeper\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper.pdb
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper.exe
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper.pdb
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper.exe.manifest
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper.application
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper.exe
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\bin\Debug\Minesweeper.pdb
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper.exe.manifest
+D:\Documents\GitHub\Mineweeper-2.0\Minesweeper_V1.0\obj\x86\Debug\Minesweeper.application

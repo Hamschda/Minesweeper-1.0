@@ -311,7 +311,7 @@ namespace WindowsFormsApplication1
             if (e.Button == MouseButtons.Left && gameover == false && gamewin == false) //Prüfen, ob Links-Klick
             {
                 timer4.Start();
-                if (btn[x, y].Image == blankBitmap) // Prüfen ob eine Flagge auf dem Feld vorhanden ist
+                if (btn[x, y].Image == blankBitmap) // Prüfen ob eine Flagge vorhanden ist oder ob Feld bereits aufgedeckt ist
                 {
                     countMines(x, y); //umliegende Minen zählen
 
@@ -344,7 +344,7 @@ namespace WindowsFormsApplication1
                         {
                             if (ix == bmb_x[i] && iy == bmb_y[i])
                             {
-                                if (btn[ix, iy].Image != redMineBitmap && btn[x,y].Image != flagBitmap) // Abfrage ob Bombe die Aufgedeckt werden soll die erste Bombe war bzw. ob Bombe durch Fahne deaktiviert ist
+                                if (btn[ix, iy].Image != redMineBitmap && btn[ix,iy].Image != flagBitmap) // Abfrage ob Bombe die Aufgedeckt werden soll die erste Bombe war bzw. ob Bombe durch Fahne deaktiviert ist
                                 {
                                     btn[ix, iy].Image = mineBitmap;
                                 }
