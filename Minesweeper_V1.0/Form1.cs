@@ -344,13 +344,13 @@ namespace WindowsFormsApplication1
                         {
                             if (ix == bmb_x[i] && iy == bmb_y[i])
                             {
-                                if (btn[ix, iy].Image != redMineBitmap && btn[ix,iy].Image != flagBitmap) // Abfrage ob Bombe die Aufgedeckt werden soll die erste Bombe war bzw. ob Bombe durch Fahne deaktiviert ist
+                                if (btn[ix, iy].Image != redMineBitmap && btn[ix,iy].Image != flagBitmap) // Abfrage erste Bombe oder durch Fahne deaktiviert
                                 {
                                     btn[ix, iy].Image = mineBitmap;
                                 }
                                 break;
                             }
-                            if (i == bombenzahl - 1 && btn[ix, iy].Image == flagBitmap)
+                            if (i == bombenzahl - 1 && btn[ix, iy].Image == flagBitmap) // Abfrage falsch gesetzte Fahne
                             {
                                 btn[ix, iy].Image = crossedMineBitmap;
                             }
