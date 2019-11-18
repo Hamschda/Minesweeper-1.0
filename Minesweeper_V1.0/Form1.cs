@@ -348,8 +348,9 @@ namespace WindowsFormsApplication1
                                 {
                                     btn[ix, iy].Image = mineBitmap;
                                 }
+                                break;
                             }
-                            if (ix != bmb_x[i] && iy != bmb_y[i] && btn[ix, iy].Image == flagBitmap) // Abfrage falsch gesetzte Fahne
+                            if (i == bombenzahl - 1 && btn[ix, iy].Image == flagBitmap)
                             {
                                 btn[ix, iy].Image = crossedMineBitmap;
                             }
